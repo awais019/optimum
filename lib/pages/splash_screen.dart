@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:optimum/app_colors.dart';
+import 'package:optimum/pages/onboarding.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
@@ -25,11 +26,7 @@ class SplashScreen extends StatelessWidget {
             ),
           ],
         ),
-        nextScreen: Scaffold(
-          appBar: AppBar(
-            title: const Text("home"),
-          ),
-        ),
+        nextScreen: const OnBoarding(),
       ),
       Positioned(
           bottom: 0,
