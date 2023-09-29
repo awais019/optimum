@@ -1,8 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:optimum/app_colors.dart';
 
-class Register extends StatelessWidget {
+class Register extends StatefulWidget {
   const Register({super.key});
+
+  @override
+  State<Register> createState() => _RegisterState();
+}
+
+class _RegisterState extends State<Register> {
+  int selected = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -52,13 +59,19 @@ class Register extends StatelessWidget {
                     color: AppColors.darkNeutral100)),
             const SizedBox(height: 32.0),
             TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  setState(() {
+                    selected = 1;
+                  });
+                },
                 child: Container(
                   padding: const EdgeInsets.all(16.0),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8.0),
                     border: Border.all(
-                      color: AppColors.darkNeutrals50,
+                      color: selected == 1
+                          ? AppColors.primaryColor
+                          : AppColors.darkNeutrals50,
                       width: 1.0,
                     ),
                   ),
@@ -66,24 +79,38 @@ class Register extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      const Text("Patient",
-                          style: TextStyle(
-                              fontSize: 20.0,
-                              height: 1.2,
-                              fontWeight: FontWeight.w500,
-                              color: AppColors.darkNeutrals500)),
+                      Row(children: [
+                        selected == 1
+                            ? Image.asset("assets/icons/done.png")
+                            : const SizedBox.shrink(),
+                        const SizedBox(width: 12.0),
+                        Text("Patient",
+                            style: TextStyle(
+                                fontSize: 20.0,
+                                height: 1.2,
+                                fontWeight: FontWeight.w500,
+                                color: selected == 1
+                                    ? AppColors.primaryColor
+                                    : AppColors.darkNeutrals500)),
+                      ]),
                       Image.asset("assets/icons/patient.png")
                     ],
                   ),
                 )),
             TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  setState(() {
+                    selected = 2;
+                  });
+                },
                 child: Container(
                   padding: const EdgeInsets.all(16.0),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8.0),
                     border: Border.all(
-                      color: AppColors.darkNeutrals50,
+                      color: selected == 2
+                          ? AppColors.primaryColor
+                          : AppColors.darkNeutrals50,
                       width: 1.0,
                     ),
                   ),
@@ -91,12 +118,20 @@ class Register extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      const Text("Doctor",
-                          style: TextStyle(
-                              fontSize: 20.0,
-                              height: 1.2,
-                              fontWeight: FontWeight.w500,
-                              color: AppColors.darkNeutrals500)),
+                      Row(children: [
+                        selected == 2
+                            ? Image.asset("assets/icons/done.png")
+                            : const SizedBox.shrink(),
+                        const SizedBox(width: 12.0),
+                        Text("Doctor",
+                            style: TextStyle(
+                                fontSize: 20.0,
+                                height: 1.2,
+                                fontWeight: FontWeight.w500,
+                                color: selected == 2
+                                    ? AppColors.primaryColor
+                                    : AppColors.darkNeutrals500)),
+                      ]),
                       Image.asset("assets/icons/doctor.png")
                     ],
                   ),
