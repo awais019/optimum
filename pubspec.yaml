@@ -78,8 +78,20 @@ flutter:
   fonts:
      - family: 'Plus Jakarta Sans'
        fonts:
-         - asset: fonts/PlusJakartaSans-Regular.ttf
+         - asset: fonts/PlusJakartaSans-BoldItalic.ttf
+         - asset: fonts/PlusJakartaSans-Bold.ttf
+         - asset: fonts/PlusJakartaSans-ExtraBoldItalic.ttf
+         - asset: fonts/PlusJakartaSans-ExtraBold.ttf
+         - asset: fonts/PlusJakartaSans-ExtraLightItalic.ttf
+         - asset: fonts/PlusJakartaSans-ExtraLight.ttf
          - asset: fonts/PlusJakartaSans-Italic.ttf
-           style: italic
+         - asset: fonts/PlusJakartaSans-LightItalic.ttf
+         - asset: fonts/PlusJakartaSans-Light.ttf
+         - asset: fonts/PlusJakartaSans-MediumItalic.ttf
+         - asset: fonts/PlusJakartaSans-Medium.ttf
+         - asset: fonts/PlusJakartaSans-Regular.ttf
+         - asset: fonts/PlusJakartaSans-SemiBoldItalic.ttf
+         - asset: fonts/PlusJakartaSans-SemiBold.ttf
+
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
