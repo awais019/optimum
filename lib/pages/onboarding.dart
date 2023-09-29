@@ -105,7 +105,9 @@ class _OnBoardingState extends State<OnBoarding> {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(40.0),
                 child: TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pushNamed(context, "/register");
+                  },
                   style: TextButton.styleFrom(
                     backgroundColor: AppColors.primaryColor,
                     padding: const EdgeInsets.symmetric(
