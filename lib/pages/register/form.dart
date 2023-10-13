@@ -13,6 +13,13 @@ class RegisterUser extends StatefulWidget {
 class _RegisterUserState extends State<RegisterUser> {
   final _formKey = GlobalKey<FormState>();
   bool isHidden = true;
+
+  TextEditingController nameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+
+  void handleSubmit() {}
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,6 +58,7 @@ class _RegisterUserState extends State<RegisterUser> {
                 key: _formKey,
                 child: Column(children: [
                   TextFormField(
+                    controller: nameController,
                     decoration: InputDecoration(
                         prefixIcon: IconTheme(
                           data: const IconThemeData(
@@ -90,6 +98,7 @@ class _RegisterUserState extends State<RegisterUser> {
                   ),
                   const SizedBox(height: 24.0),
                   TextFormField(
+                    controller: emailController,
                     decoration: InputDecoration(
                         prefixIcon: IconTheme(
                           data: const IconThemeData(
@@ -131,6 +140,7 @@ class _RegisterUserState extends State<RegisterUser> {
                   ),
                   const SizedBox(height: 24.0),
                   TextFormField(
+                    controller: passwordController,
                     obscureText: isHidden,
                     decoration: InputDecoration(
                         prefixIcon: IconTheme(
@@ -186,10 +196,7 @@ class _RegisterUserState extends State<RegisterUser> {
                   SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(
-                      onPressed: () {
-                        debugPrint("pin");
-                        _formKey.currentState!.validate();
-                      },
+                      onPressed: handleSubmit,
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppColors.primaryColor,
                         elevation: 16,
