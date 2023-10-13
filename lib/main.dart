@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:optimum/pages/splash_screen.dart';
-import 'package:optimum/pages/register.dart';
+import 'package:optimum/pages/register/index.dart';
+import 'package:optimum/pages/register/form.dart';
 
 void main() {
   runApp(MaterialApp(

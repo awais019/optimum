@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:optimum/app_colors.dart';
+import "package:optimum/pages/register/form.dart";
 
 class Register extends StatefulWidget {
   const Register({super.key});
@@ -140,7 +141,13 @@ class _RegisterState extends State<Register> {
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  String role = selected == 1 ? "Patient" : "Doctor";
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => RegisterUser(role: role)));
+                },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.primaryColor,
                   elevation: 16,
