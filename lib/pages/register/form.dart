@@ -12,7 +12,7 @@ class RegisterUser extends StatefulWidget {
 
 class _RegisterUserState extends State<RegisterUser> {
   final _formKey = GlobalKey<FormState>();
-  bool isHidden = false;
+  bool isHidden = true;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
