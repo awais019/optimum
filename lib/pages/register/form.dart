@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:optimum/app_colors.dart';
+import 'package:optimum/services/user.service.dart';
 
 class RegisterUser extends StatefulWidget {
   final String role;
@@ -18,7 +19,16 @@ class _RegisterUserState extends State<RegisterUser> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
-  void handleSubmit() {}
+  final UserService userService = UserService();
+
+  void handleSubmit() async {
+    try {
+      await userService.create(nameController.text,
+          emailController.text, passwordController.text, widget.role);
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
