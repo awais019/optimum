@@ -36,6 +36,13 @@ class _RegisterUserState extends State<RegisterUser> {
         setState(() {
           error = data["message"];
         });
+      } else {
+        if (mounted) {
+          nameController.clear();
+          emailController.clear();
+          passwordController.clear();
+          Navigator.pushNamed(context, '/verify_email');
+        }
       }
     } catch (e) {
       debugPrint('An unknown error occurred: $e');
