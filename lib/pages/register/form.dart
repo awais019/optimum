@@ -80,7 +80,7 @@ class _RegisterUserState extends State<RegisterUser> {
             const Text("Fil the details to register account",
                 style: TextStyle(
                     fontSize: 16.0,
-                    color: AppColors.darkNeutral100,
+                    color: AppColors.darkNeutrals100,
                     height: 1.5)),
             const SizedBox(height: 32.0),
             Form(
@@ -93,12 +93,12 @@ class _RegisterUserState extends State<RegisterUser> {
                         decoration: InputDecoration(
                             prefixIcon: IconTheme(
                               data: const IconThemeData(
-                                  color: AppColors.darkNeutral100),
+                                  color: AppColors.darkNeutrals100),
                               child: Image.asset("assets/icons/person.png"),
                             ),
                             hintText: 'Full Name',
                             hintStyle: const TextStyle(
-                                color: AppColors.darkNeutral100,
+                                color: AppColors.darkNeutrals100,
                                 fontSize: 16.0,
                                 height: 1.5,
                                 fontWeight: FontWeight.w500),
@@ -133,12 +133,12 @@ class _RegisterUserState extends State<RegisterUser> {
                         decoration: InputDecoration(
                             prefixIcon: IconTheme(
                               data: const IconThemeData(
-                                  color: AppColors.darkNeutral100),
+                                  color: AppColors.darkNeutrals100),
                               child: Image.asset("assets/icons/email.png"),
                             ),
                             hintText: 'Email',
                             hintStyle: const TextStyle(
-                                color: AppColors.darkNeutral100,
+                                color: AppColors.darkNeutrals100,
                                 fontSize: 16.0,
                                 height: 1.5,
                                 fontWeight: FontWeight.w500),
@@ -176,13 +176,13 @@ class _RegisterUserState extends State<RegisterUser> {
                         decoration: InputDecoration(
                             prefixIcon: IconTheme(
                               data: const IconThemeData(
-                                  color: AppColors.darkNeutral100),
+                                  color: AppColors.darkNeutrals100),
                               child: Image.asset("assets/icons/password.png"),
                             ),
                             suffixIcon: GestureDetector(
                               child: IconTheme(
                                   data: const IconThemeData(
-                                      color: AppColors.darkNeutral100,
+                                      color: AppColors.darkNeutrals100,
                                       size: 24.0),
                                   child: isHidden
                                       ? Image.asset(
@@ -197,7 +197,7 @@ class _RegisterUserState extends State<RegisterUser> {
                             ),
                             hintText: 'Password',
                             hintStyle: const TextStyle(
-                                color: AppColors.darkNeutral100,
+                                color: AppColors.darkNeutrals100,
                                 fontSize: 16.0,
                                 height: 1.5,
                                 fontWeight: FontWeight.w500),

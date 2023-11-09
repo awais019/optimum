@@ -94,7 +94,7 @@ class _OnBoardingState extends State<OnBoarding> {
             const Text(
                 "Track your progress with real-time monitoring while enjoying expert-designed exercises.",
                 style: TextStyle(
-                  color: AppColors.darkNeutral100,
+                  color: AppColors.darkNeutrals100,
                   fontSize: 16.0,
                   height: 1.5,
                   fontWeight: FontWeight.w500,

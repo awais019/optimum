@@ -57,7 +57,7 @@ class _RegisterState extends State<Register> {
                     fontSize: 16.0,
                     height: 1.5,
                     fontWeight: FontWeight.w500,
-                    color: AppColors.darkNeutral100)),
+                    color: AppColors.darkNeutrals100)),
             const SizedBox(height: 32.0),
             TextButton(
                 onPressed: () {
