@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:optimum/app_colors.dart';
+import 'package:optimum/pages/register/verify_email.dart';
 import 'package:optimum/services/user.service.dart';
 
 class RegisterUser extends StatefulWidget {
@@ -38,10 +39,12 @@ class _RegisterUserState extends State<RegisterUser> {
         });
       } else {
         if (mounted) {
-          nameController.clear();
-          emailController.clear();
-          passwordController.clear();
-          Navigator.pushNamed(context, '/verify_email');
+          error = "";
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) =>
+                      VerifyEmail(email: emailController.text)));
         }
       }
     } catch (e) {

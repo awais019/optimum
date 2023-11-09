@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
+import 'dart:convert';
 import 'package:optimum/app_colors.dart';
+import 'package:optimum/services/auth.service.dart';
+import "package:fluttertoast/fluttertoast.dart";
 
 class VerifyEmail extends StatefulWidget {
-  const VerifyEmail({super.key});
+  final String email;
+
+  const VerifyEmail({super.key, required this.email});
 
   @override
   State<VerifyEmail> createState() => _VerifyEmailState();
@@ -12,8 +18,37 @@ class _VerifyEmailState extends State<VerifyEmail> {
   final _formKey = GlobalKey<FormState>();
 
   TextEditingController codeController = TextEditingController();
+  String error = "";
 
-  void handleSubmit() {}
+  void handleVerify() async {
+    try {
+      Response res = await AuthService.verifyEmail(
+          widget.email, int.parse(codeController.text));
+
+      if (res.statusCode == 200) {
+        Fluttertoast.showToast(
+            msg: "Email Verified",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.TOP,
+            backgroundColor: AppColors.primaryColor);
+      } else {
+        final Map<String, dynamic> data = json.decode(res.body);
+        error = data["message"];
+        debugPrint(error);
+      }
+    } catch (e) {
+      Fluttertoast.showToast(msg: "Something went wrong!");
+    }
+  }
+
+  void handleResend() async {
+    try {
+      await AuthService.resendEmail(widget.email);
+      Fluttertoast.showToast(msg: "Email sent");
+    } catch (e) {
+      Fluttertoast.showToast(msg: "Something went wrong!");
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,6 +91,7 @@ class _VerifyEmailState extends State<VerifyEmail> {
           Form(
               key: _formKey,
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   TextFormField(
                     controller: codeController,
@@ -91,11 +127,16 @@ class _VerifyEmailState extends State<VerifyEmail> {
                       return null;
                     },
                   ),
+                  if (error.isNotEmpty)
+                    Text(
+                      error,
+                      style: const TextStyle(color: Colors.red),
+                    ),
                   const SizedBox(height: 16.0),
                   SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(
-                      onPressed: handleSubmit,
+                      onPressed: handleVerify,
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppColors.primaryColor,
                         elevation: 16,
@@ -121,9 +162,7 @@ class _VerifyEmailState extends State<VerifyEmail> {
           SizedBox(
             width: double.infinity,
             child: TextButton(
-              onPressed: () {
-                // resend email
-              },
+              onPressed: handleResend,
               child: const Text(
                 'Resend email',
                 style: TextStyle(
