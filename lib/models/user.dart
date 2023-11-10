@@ -1,14 +1,12 @@
 class User {
   final String id;
   final String name;
+  final String role;
 
-  User(this.id, this.name);
+  User(this.id, this.name, this.role);
 
-  User copyWith({String? id, String? name}) {
-    return User(
-      id ?? this.id,
-      name ?? this.name,
-    );
+  User copyWith({String? id, String? name, String? role}) {
+    return User(id ?? this.id, name ?? this.name, role ?? this.role);
   }
 }
 
@@ -17,5 +15,5 @@ class AppState {
 
   AppState({required this.user});
 
-  AppState.initialState() : user = User("", "");
+  AppState.initialState() : user = User("", "", "");
 }

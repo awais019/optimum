@@ -29,7 +29,8 @@ class _VerifyEmailState extends State<VerifyEmail> {
           widget.email, int.parse(codeController.text));
       final Map<String, dynamic> data = json.decode(res.body);
       if (res.statusCode == 200) {
-        User user = User(data['data']['id'], data['data']['name']);
+        User user = User(
+            data['data']['id'], data['data']['name'], data['data']['role']);
         viewModel.onUpdateUser(user);
         Fluttertoast.showToast(msg: "Email Verified");
       } else {
