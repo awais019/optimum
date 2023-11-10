@@ -2,13 +2,36 @@ import 'package:flutter/material.dart';
 import 'package:optimum/pages/splash_screen.dart';
 import 'package:optimum/pages/register/index.dart';
 
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:redux/redux.dart';
+
+import 'package:optimum/models/user.dart';
+import 'package:optimum/redux/actions.dart';
+import 'package:optimum/redux/reducers.dart';
+
 void main() async {
-  runApp(MaterialApp(
-      title: 'Optimum',
-      theme: ThemeData(fontFamily: 'Plus Jakarta Sans'),
-      initialRoute: "/splash",
-      routes: {
-        "/splash": (context) => const SplashScreen(),
-        "/register": (context) => const Register(),
-      }));
+  final store =
+      Store<AppState>(appStateReducer, initialState: AppState.initialState());
+  runApp(Optimum(store: store));
+}
+
+class Optimum extends StatelessWidget {
+  final Store<AppState> store;
+
+  const Optimum({super.key, required this.store});
+
+  @override
+  Widget build(BuildContext context) {
+    return StoreProvider<AppState>(
+      store: store,
+      child: MaterialApp(
+          title: 'Optimum',
+          theme: ThemeData(fontFamily: 'Plus Jakarta Sans'),
+          initialRoute: "/splash",
+          routes: {
+            "/splash": (context) => const SplashScreen(),
+            "/register": (context) => const Register(),
+          }),
+    );
+  }
 }
