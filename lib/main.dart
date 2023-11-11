@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:optimum/pages/splash_screen.dart';
 import 'package:optimum/pages/register/index.dart';
+import 'package:optimum/pages/profile_completion/gender.dart';
 
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 
 import 'package:optimum/models/user.dart';
-import 'package:optimum/redux/actions.dart';
 import 'package:optimum/redux/reducers.dart';
 
 void main() async {
@@ -27,10 +27,11 @@ class Optimum extends StatelessWidget {
       child: MaterialApp(
           title: 'Optimum',
           theme: ThemeData(fontFamily: 'Plus Jakarta Sans'),
-          initialRoute: "/splash",
+          initialRoute: "/gender",
           routes: {
             "/splash": (context) => const SplashScreen(),
             "/register": (context) => const Register(),
+            "/gender": (context) => const Gender()
           }),
     );
   }

@@ -5,3 +5,9 @@ class UpdateUserAction {
 
   UpdateUserAction(this.user);
 }
+
+class UpdateUserGenderAction {
+  final String gender;
+
+  UpdateUserGenderAction(this.gender);
+}

@@ -8,6 +8,8 @@ AppState appStateReducer(AppState state, action) {
 User userReducer(User state, action) {
   if (action is UpdateUserAction) {
     return action.user;
+  } else if (action is UpdateUserGenderAction) {
+    return state.copyWith(gender: action.gender);
   }
   return state;
 }

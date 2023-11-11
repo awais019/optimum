@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:redux/redux.dart';
 import 'package:optimum/models/user.dart';
 import 'package:optimum/redux/actions.dart';
@@ -7,14 +6,25 @@ class UserViewModel {
   final User user;
 
   final Function(User) onUpdateUser;
+  final Function(String) onUpdateUserGender;
 
-  UserViewModel({required this.user, required this.onUpdateUser});
+  UserViewModel(
+      {required this.user,
+      required this.onUpdateUser,
+      required this.onUpdateUserGender});
 
   factory UserViewModel.create(Store<AppState> store) {
-    onUpdateUser(User user) {
+    _onUpdateUser(User user) {
       store.dispatch(UpdateUserAction(user));
     }
 
-    return UserViewModel(user: store.state.user, onUpdateUser: onUpdateUser);
+    _onUpdateUserGender(String gender) {
+      store.dispatch(UpdateUserGenderAction(gender));
+    }
+
+    return UserViewModel(
+        user: store.state.user,
+        onUpdateUser: _onUpdateUser,
+        onUpdateUserGender: _onUpdateUserGender);
   }
 }
