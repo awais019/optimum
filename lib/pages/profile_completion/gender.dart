@@ -53,19 +53,19 @@ class _GenderState extends State<Gender> {
               title: Padding(
                   padding: const EdgeInsets.fromLTRB(0, 8, 0, 0),
                   child: RichText(
-                      text: const TextSpan(
-                          style: TextStyle(
+                      text: TextSpan(
+                          style: const TextStyle(
                             color: AppColors.darkNeutrals500,
                           ),
                           children: [
-                        TextSpan(
+                        const TextSpan(
                             text: "1",
                             style: TextStyle(
                               fontSize: 20.0,
                               height: 1.2,
                               fontWeight: FontWeight.w600,
                             )),
-                        TextSpan(
+                        const TextSpan(
                             text: "/",
                             style: TextStyle(
                               fontSize: 16.0,
@@ -73,8 +73,8 @@ class _GenderState extends State<Gender> {
                               fontWeight: FontWeight.w500,
                             )),
                         TextSpan(
-                            text: "5",
-                            style: TextStyle(
+                            text: viewModel.user.role == "DOCTOR" ? "5" : "2",
+                            style: const TextStyle(
                               color: AppColors.darkNeutrals100,
                               fontSize: 16.0,
                               height: 1.5,
@@ -113,15 +113,21 @@ class _GenderState extends State<Gender> {
                     const SizedBox(width: 4.0),
                     const Icon(Icons.circle,
                         color: AppColors.darkNeutrals500, size: 8.0),
-                    const SizedBox(width: 4.0),
-                    const Icon(Icons.circle,
-                        color: AppColors.darkNeutrals500, size: 8.0),
-                    const SizedBox(width: 4.0),
-                    const Icon(Icons.circle,
-                        color: AppColors.darkNeutrals500, size: 8.0),
-                    const SizedBox(width: 4.0),
-                    const Icon(Icons.circle,
-                        color: AppColors.darkNeutrals500, size: 8.0),
+                    if (viewModel.user.role == "DOCTOR")
+                      const SizedBox(width: 4.0),
+                    if (viewModel.user.role == "DOCTOR")
+                      const Icon(Icons.circle,
+                          color: AppColors.darkNeutrals500, size: 8.0),
+                    if (viewModel.user.role == "DOCTOR")
+                      const SizedBox(width: 4.0),
+                    if (viewModel.user.role == "DOCTOR")
+                      const Icon(Icons.circle,
+                          color: AppColors.darkNeutrals500, size: 8.0),
+                    if (viewModel.user.role == "DOCTOR")
+                      const SizedBox(width: 4.0),
+                    if (viewModel.user.role == "DOCTOR")
+                      const Icon(Icons.circle,
+                          color: AppColors.darkNeutrals500, size: 8.0),
                     const SizedBox(width: 16.0)
                   ],
                 ),
@@ -234,6 +240,7 @@ class _GenderState extends State<Gender> {
                       child: ElevatedButton(
                         onPressed: () {
                           viewModel.onUpdateUserGender(_selectedGender!.value);
+                          Navigator.pushNamed(context, "/dob");
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: AppColors.primaryColor,
