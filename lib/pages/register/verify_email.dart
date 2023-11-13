@@ -37,10 +37,9 @@ class _VerifyEmailState extends State<VerifyEmail> {
       });
 
       final Map<String, dynamic> data = json.decode(res.body);
+      debugPrint(viewModel.user.authToken);
       if (res.statusCode == 200) {
-        User user = User(
-            data['data']['id'], data['data']['name'], data['data']['role'], "");
-        viewModel.onUpdateUser(user);
+        viewModel.onUpdateAuthToken(data['data']);
         if (mounted) {
           Navigator.pushNamed(context, "/gender");
         }

@@ -7,11 +7,15 @@ class UserViewModel {
 
   final Function(User) onUpdateUser;
   final Function(String) onUpdateUserGender;
+  final Function(String) onUpdateAuthToken;
+  final Function(DateTime) onUpdateDOB;
 
   UserViewModel(
       {required this.user,
       required this.onUpdateUser,
-      required this.onUpdateUserGender});
+      required this.onUpdateUserGender,
+      required this.onUpdateAuthToken,
+      required this.onUpdateDOB});
 
   factory UserViewModel.create(Store<AppState> store) {
     _onUpdateUser(User user) {
@@ -22,9 +26,19 @@ class UserViewModel {
       store.dispatch(UpdateUserGenderAction(gender));
     }
 
+    _onUpdateAuthToken(String token) {
+      store.dispatch(UpdateAuthToken(token));
+    }
+
+    _onUpdateDOB(DateTime dob) {
+      store.dispatch(UpdateDOB(dob));
+    }
+
     return UserViewModel(
         user: store.state.user,
         onUpdateUser: _onUpdateUser,
-        onUpdateUserGender: _onUpdateUserGender);
+        onUpdateUserGender: _onUpdateUserGender,
+        onUpdateAuthToken: _onUpdateAuthToken,
+        onUpdateDOB: _onUpdateDOB);
   }
 }

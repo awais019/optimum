@@ -3,12 +3,21 @@ class User {
   final String name;
   final String role;
   String gender;
+  String? authToken;
+  DateTime? dob;
 
-  User(this.id, this.name, this.role, this.gender);
+  User(this.id, this.name, this.role, this.gender, {this.authToken, this.dob});
 
-  User copyWith({String? id, String? name, String? role, String? gender}) {
+  User copyWith(
+      {String? id,
+      String? name,
+      String? role,
+      String? gender,
+      String? authToken,
+      DateTime? dob}) {
     return User(id ?? this.id, name ?? this.name, role ?? this.role,
-        gender ?? this.gender);
+        gender ?? this.gender,
+        authToken: authToken ?? this.authToken, dob: dob ?? this.dob);
   }
 }
 

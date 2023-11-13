@@ -11,3 +11,15 @@ class UpdateUserGenderAction {
 
   UpdateUserGenderAction(this.gender);
 }
+
+class UpdateAuthToken {
+  final String authToken;
+
+  UpdateAuthToken(this.authToken);
+}
+
+class UpdateDOB {
+  final DateTime dob;
+
+  UpdateDOB(this.dob);
+}
