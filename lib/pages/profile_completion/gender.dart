@@ -3,7 +3,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:optimum/app_colors.dart';
 
 import 'package:optimum/models/user.dart';
-import 'package:optimum/view_models/UserViewModel.dart';
+import 'package:optimum/view_models/user_view_model.dart';
 
 class Gender extends StatefulWidget {
   const Gender({super.key});

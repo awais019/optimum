@@ -7,7 +7,7 @@ import 'package:http/http.dart';
 import 'package:optimum/app_colors.dart';
 
 import 'package:optimum/models/user.dart';
-import 'package:optimum/view_models/UserViewModel.dart';
+import 'package:optimum/view_models/user_view_model.dart';
 import 'package:optimum/services/auth.service.dart';
 
 class DOB extends StatefulWidget {

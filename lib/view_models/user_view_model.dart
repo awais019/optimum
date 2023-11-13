@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:redux/redux.dart';
 import 'package:optimum/models/user.dart';
 import 'package:optimum/redux/actions.dart';
