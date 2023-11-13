@@ -24,14 +24,15 @@ class AuthService {
         body: jsonEncode({"email": email}));
   }
 
-  static Future<http.Response> updatePatientProfile(User user) {
+  static Future<http.Response> updatePatientProfile(
+      User user, String authToken) {
     final updateURI = baseURL.resolve("/api/auth/me");
     return http.put(updateURI,
         headers: {
           'Content-Type': 'application/json; charset=UTF-8',
-          'x-auth-token': user.authToken as String
+          'x-auth-token': authToken
         },
-        body: jsonEncode(   {
+        body: jsonEncode({
           "name": user.name,
           "role": user.role,
           "gender": user.gender,

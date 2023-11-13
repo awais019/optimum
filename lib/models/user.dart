@@ -21,11 +21,3 @@ class User {
         dob: dob ?? this.dob);
   }
 }
-
-class AppState {
-  final User user;
-
-  AppState({required this.user});
-
-  AppState.initialState() : user = User("", "", "");
-}

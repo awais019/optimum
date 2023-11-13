@@ -7,12 +7,15 @@ import 'package:optimum/pages/profile_completion/date_of_birth.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 
+import 'package:optimum/models/app.dart';
 import 'package:optimum/models/user.dart';
+import 'package:optimum/models/auth.dart';
 import 'package:optimum/redux/reducers.dart';
 
 void main() async {
-  final store =
-      Store<AppState>(appStateReducer, initialState: AppState.initialState());
+  final store = Store<AppState>(appStateReducer,
+      initialState: AppState.initialState(User("", "", ""),
+          AuthState(status: AuthStatus.notAuthenticated, authToken: "")));
   runApp(Optimum(store: store));
 }
 
