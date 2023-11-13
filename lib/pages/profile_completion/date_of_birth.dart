@@ -1,9 +1,14 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:http/http.dart';
 import 'package:optimum/app_colors.dart';
 
 import 'package:optimum/models/user.dart';
 import 'package:optimum/view_models/UserViewModel.dart';
+import 'package:optimum/services/auth.service.dart';
 
 class DOB extends StatefulWidget {
   const DOB({super.key});
@@ -20,6 +25,23 @@ class _DOBState extends State<DOB> {
   bool dayEntered = true;
   bool monthEntered = true;
   bool yearEntered = true;
+
+  void handleUpdate(viewModel) async {
+    try {
+      DateTime dob = DateTime(selectedYear!, selectedMonth!, selectedDay!);
+      viewModel.onUpdateDOB(dob);
+      Response res = await AuthService.updatePatientProfile(viewModel.user);
+      final Map<String, dynamic> data = json.decode(res.body);
+      Fluttertoast.showToast(msg: data["message"]);
+
+      if (res.statusCode != 200) {
+        debugPrint(data["message"]);
+      }
+    } catch (e) {
+      debugPrint('$e');
+      Fluttertoast.showToast(msg: "Something went wrong!");
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -313,9 +335,7 @@ class _DOBState extends State<DOB> {
                           }
                           if (dayEntered && monthEntered && yearEntered) {
                             try {
-                              DateTime dob = DateTime(
-                                  selectedYear!, selectedMonth!, selectedDay!);
-                              debugPrint(dob.toString());
+                              handleUpdate(viewModel);
                             } catch (e) {
                               debugPrint('Error parsing date: $e');
                             }

@@ -1,5 +1,8 @@
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+
+import 'package:optimum/models/user.dart';
 
 class AuthService {
   static final baseURL = Uri.parse('http://10.0.2.2:4000');
@@ -20,5 +23,20 @@ class AuthService {
           'Content-Type': 'application/json; charset=UTF-8',
         },
         body: jsonEncode({"email": email}));
+  }
+
+  static Future<http.Response> updatePatientProfile(User user) {
+    final updateURI = baseURL.resolve("/api/auth/me");
+    return http.put(updateURI,
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+          'x-auth-token': user.authToken as String
+        },
+        body: jsonEncode(   {
+          "name": user.name,
+          "role": user.role,
+          "gender": user.gender,
+          "dob": user.dob.toString()
+        }));
   }
 }
