@@ -19,6 +19,7 @@ class _RegisterUserState extends State<RegisterUser> {
   final _formKey = GlobalKey<FormState>();
   String error = "";
   bool isHidden = true;
+  bool isLoading = false;
 
   TextEditingController nameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
@@ -28,8 +29,15 @@ class _RegisterUserState extends State<RegisterUser> {
 
   void handleSubmit() async {
     try {
+      setState(() {
+        isLoading = true;
+      });
       Response res = await userService.create(nameController.text,
           emailController.text, passwordController.text, widget.role);
+
+      setState(() {
+        isLoading = false;
+      });
 
       final Map<String, dynamic> data = json.decode(res.body);
 
@@ -250,13 +258,23 @@ class _RegisterUserState extends State<RegisterUser> {
                             padding: const EdgeInsets.symmetric(
                                 vertical: 16.0, horizontal: 32.0),
                           ),
-                          child: const Text("Register",
-                              style: TextStyle(
-                                fontSize: 16.0,
-                                height: 1.5,
-                                fontWeight: FontWeight.bold,
-                                color: AppColors.light50,
-                              )),
+                          child: isLoading
+                              ? const SizedBox(
+                                  height: 24.0,
+                                  width: 24.0,
+                                  child: CircularProgressIndicator(
+                                    strokeWidth: 2.0,
+                                    valueColor: AlwaysStoppedAnimation<Color>(
+                                        Colors.white), // Spinner color
+                                  ),
+                                )
+                              : const Text("Register",
+                                  style: TextStyle(
+                                    fontSize: 16.0,
+                                    height: 1.5,
+                                    fontWeight: FontWeight.bold,
+                                    color: AppColors.light50,
+                                  )),
                         ),
                       ),
                     ]))

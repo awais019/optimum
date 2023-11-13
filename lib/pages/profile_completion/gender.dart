@@ -39,17 +39,17 @@ class _GenderState extends State<Gender> {
             appBar: AppBar(
               elevation: 0,
               backgroundColor: Colors.white,
-              leading: IconButton(
-                padding: const EdgeInsets.fromLTRB(0, 8, 0, 0),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                icon: const Icon(
-                  Icons.navigate_before,
-                  color: AppColors.darkNeutrals500,
-                  size: 24.0,
-                ),
-              ),
+              // leading: IconButton(
+              //   padding: const EdgeInsets.fromLTRB(0, 8, 0, 0),
+              //   onPressed: () {
+              //     Navigator.pop(context);
+              //   },
+              //   icon: const Icon(
+              //     Icons.navigate_before,
+              //     color: AppColors.darkNeutrals500,
+              //     size: 24.0,
+              //   ),
+              // ),
               title: Padding(
                   padding: const EdgeInsets.fromLTRB(0, 8, 0, 0),
                   child: RichText(

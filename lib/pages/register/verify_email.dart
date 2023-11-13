@@ -20,19 +20,30 @@ class VerifyEmail extends StatefulWidget {
 
 class _VerifyEmailState extends State<VerifyEmail> {
   final _formKey = GlobalKey<FormState>();
+  bool isLoading = false;
 
   TextEditingController codeController = TextEditingController();
 
   void handleVerify(UserViewModel viewModel) async {
     try {
+      setState(() {
+        isLoading = true;
+      });
       Response res = await AuthService.verifyEmail(
           widget.email, int.parse(codeController.text));
+
+      setState(() {
+        isLoading = false;
+      });
+
       final Map<String, dynamic> data = json.decode(res.body);
       if (res.statusCode == 200) {
         User user = User(
             data['data']['id'], data['data']['name'], data['data']['role'], "");
         viewModel.onUpdateUser(user);
-        Fluttertoast.showToast(msg: "Email Verified");
+        if (mounted) {
+          Navigator.pushNamed(context, "/gender");
+        }
       } else {
         Fluttertoast.showToast(msg: data['message']);
       }
@@ -153,13 +164,24 @@ class _VerifyEmailState extends State<VerifyEmail> {
                                   padding: const EdgeInsets.symmetric(
                                       vertical: 16.0, horizontal: 32.0),
                                 ),
-                                child: const Text("Verify",
-                                    style: TextStyle(
-                                      fontSize: 16.0,
-                                      height: 1.5,
-                                      fontWeight: FontWeight.bold,
-                                      color: AppColors.light50,
-                                    )),
+                                child: isLoading
+                                    ? const SizedBox(
+                                        height: 24.0,
+                                        width: 24.0,
+                                        child: CircularProgressIndicator(
+                                          strokeWidth: 2.0,
+                                          valueColor: AlwaysStoppedAnimation<
+                                                  Color>(
+                                              Colors.white), // Spinner color
+                                        ),
+                                      )
+                                    : const Text("Verify",
+                                        style: TextStyle(
+                                          fontSize: 16.0,
+                                          height: 1.5,
+                                          fontWeight: FontWeight.bold,
+                                          color: AppColors.light50,
+                                        )),
                               ),
                             ),
                           ],
