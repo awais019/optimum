@@ -64,7 +64,7 @@ class _HomeState extends State<Home> {
         floatingActionButton: FloatingActionButton(
           onPressed: () {},
           elevation: 3.0,
-          backgroundColor: Colors.orange,
+          backgroundColor: AppColors.primaryColor,
           shape: const RoundedRectangleBorder(
             side: BorderSide(color: Colors.white, width: 8.0),
             borderRadius: BorderRadius.all(Radius.circular(76.0)),
