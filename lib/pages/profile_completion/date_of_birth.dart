@@ -27,17 +27,30 @@ class _DOBState extends State<DOB> {
   bool monthEntered = true;
   bool yearEntered = true;
 
+  bool loading = false;
+
   void handleUpdate(
       UserViewModel userViewModel, AuthViewModel authViewModel) async {
     try {
       DateTime dob = DateTime(selectedYear!, selectedMonth!, selectedDay!);
       userViewModel.onUpdateDOB(dob);
+      debugPrint(userViewModel.user.dob.toString());
+      setState(() {
+        loading = true;
+      });
+      Future.delayed(const Duration(milliseconds: 5000));
       Response res = await AuthService.updatePatientProfile(
           userViewModel.user, authViewModel.auth.authToken as String);
+      setState(() {
+        loading = false;
+      });
       final Map<String, dynamic> data = json.decode(res.body);
-      Fluttertoast.showToast(msg: data["message"]);
       if (res.statusCode != 200) {
         debugPrint(data["message"]);
+      } else {
+        if (mounted) {
+          Navigator.pushNamed(context, "/");
+        }
       }
     } catch (e) {
       debugPrint('$e');
@@ -360,13 +373,25 @@ class _DOBState extends State<DOB> {
                                 padding: const EdgeInsets.symmetric(
                                     vertical: 16.0, horizontal: 32.0),
                               ),
-                              child: const Text("Next",
-                                  style: TextStyle(
-                                    fontSize: 16.0,
-                                    height: 1.5,
-                                    fontWeight: FontWeight.bold,
-                                    color: AppColors.light50,
-                                  )),
+                              child: (userViewModel.user.role == "PATIENT" &&
+                                      loading)
+                                  ? const SizedBox(
+                                      height: 24.0,
+                                      width: 24.0,
+                                      child: CircularProgressIndicator(
+                                        strokeWidth: 2.0,
+                                        valueColor:
+                                            AlwaysStoppedAnimation<Color>(
+                                                Colors.white), // Spinner color
+                                      ),
+                                    )
+                                  : const Text("Next",
+                                      style: TextStyle(
+                                        fontSize: 16.0,
+                                        height: 1.5,
+                                        fontWeight: FontWeight.bold,
+                                        color: AppColors.light50,
+                                      )),
                             ),
                           ),
                         ],

@@ -34,7 +34,7 @@ class Optimum extends StatelessWidget {
           theme: ThemeData(
               fontFamily: 'Plus Jakarta Sans',
               scaffoldBackgroundColor: Colors.white),
-          initialRoute: "/",
+          initialRoute: "/splash",
           routes: {
             "/splash": (context) => const SplashScreen(),
             "/": (context) => const Home(),

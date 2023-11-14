@@ -44,7 +44,7 @@ class _HomeState extends State<Home> {
               height: 5,
               decoration: const BoxDecoration(
                 shape: BoxShape.circle,
-                color: Colors.orange,
+                color: AppColors.primaryColor,
               ),
             ),
         ],
@@ -56,9 +56,10 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
+          scaffoldBackgroundColor: AppColors.light50,
           floatingActionButtonTheme: FloatingActionButtonThemeData(
-        sizeConstraints: BoxConstraints.tight(const Size(76, 76)),
-      )),
+            sizeConstraints: BoxConstraints.tight(const Size(76, 76)),
+          )),
       home: Scaffold(
         floatingActionButton: FloatingActionButton(
           onPressed: () {},
@@ -74,7 +75,6 @@ class _HomeState extends State<Home> {
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         bottomNavigationBar: BottomAppBar(
           color: Colors.white,
-          shadowColor: ,
           child: Padding(
             padding:
                 const EdgeInsets.symmetric(horizontal: 24.0, vertical: 8.0),

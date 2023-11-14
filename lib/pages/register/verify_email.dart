@@ -96,7 +96,7 @@ class _VerifyEmailState extends State<VerifyEmail> {
                     child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const SizedBox(height: 48.0),
+                          const SizedBox(height: 32.0),
                           const Text("Check your mail",
                               style: TextStyle(
                                   color: AppColors.darkNeutrals500,
@@ -111,7 +111,7 @@ class _VerifyEmailState extends State<VerifyEmail> {
                                   fontWeight: FontWeight.w500,
                                   fontSize: 16.0,
                                   height: 1.5)),
-                          const SizedBox(height: 48.0),
+                          const SizedBox(height: 32.0),
                           Form(
                               key: _formKey,
                               child: Column(
