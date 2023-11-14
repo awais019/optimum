@@ -3,6 +3,7 @@ import 'package:optimum/pages/splash_screen.dart';
 import 'package:optimum/pages/register/index.dart';
 import 'package:optimum/pages/profile_completion/gender.dart';
 import 'package:optimum/pages/profile_completion/date_of_birth.dart';
+import 'package:optimum/pages/home.dart';
 
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
@@ -33,9 +34,10 @@ class Optimum extends StatelessWidget {
           theme: ThemeData(
               fontFamily: 'Plus Jakarta Sans',
               scaffoldBackgroundColor: Colors.white),
-          initialRoute: "/splash",
+          initialRoute: "/",
           routes: {
             "/splash": (context) => const SplashScreen(),
+            "/": (context) => const Home(),
             "/register": (context) => const Register(),
             "/gender": (context) => const Gender(),
             "/dob": (context) => const DOB(),
