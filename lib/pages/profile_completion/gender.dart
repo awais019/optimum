@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:optimum/app_colors.dart';
+import 'package:optimum/managers/user.manager.dart';
 
 class Gender extends StatefulWidget {
-  const Gender({super.key});
+  final UserManager userManager;
+  const Gender({super.key, required this.userManager});
 
   @override
   State<Gender> createState() => _GenderState();
@@ -25,8 +27,6 @@ extension GenderExtension on GENDER {
 
 class _GenderState extends State<Gender> {
   GENDER? _selectedGender = GENDER.male;
-
-  String role = "PATIENT";
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +68,7 @@ class _GenderState extends State<Gender> {
                         fontWeight: FontWeight.w500,
                       )),
                   TextSpan(
-                      text: role == "DOCTOR" ? "5" : "2",
+                      text: widget.userManager.getRole == "DOCTOR" ? "5" : "2",
                       style: const TextStyle(
                         color: AppColors.darkNeutrals100,
                         fontSize: 16.0,
@@ -108,16 +108,19 @@ class _GenderState extends State<Gender> {
               const SizedBox(width: 4.0),
               const Icon(Icons.circle,
                   color: AppColors.darkNeutrals500, size: 8.0),
-              if (role == "DOCTOR") const SizedBox(width: 4.0),
-              if (role == "DOCTOR")
+              if (widget.userManager.getRole == "DOCTOR")
+                const SizedBox(width: 4.0),
+              if (widget.userManager.getRole == "DOCTOR")
                 const Icon(Icons.circle,
                     color: AppColors.darkNeutrals500, size: 8.0),
-              if (role == "DOCTOR") const SizedBox(width: 4.0),
-              if (role == "DOCTOR")
+              if (widget.userManager.getRole == "DOCTOR")
+                const SizedBox(width: 4.0),
+              if (widget.userManager.getRole == "DOCTOR")
                 const Icon(Icons.circle,
                     color: AppColors.darkNeutrals500, size: 8.0),
-              if (role == "DOCTOR") const SizedBox(width: 4.0),
-              if (role == "DOCTOR")
+              if (widget.userManager.getRole == "DOCTOR")
+                const SizedBox(width: 4.0),
+              if (widget.userManager.getRole == "DOCTOR")
                 const Icon(Icons.circle,
                     color: AppColors.darkNeutrals500, size: 8.0),
               const SizedBox(width: 16.0)
@@ -231,7 +234,8 @@ class _GenderState extends State<Gender> {
                 width: double.infinity,
                 child: ElevatedButton(
                   onPressed: () {
-                    Navigator.pushNamed(context, "/dob");
+                    widget.userManager.setGender(_selectedGender!.value);
+                    Navigator.pushNamed(context, "/profile_completion/dob");
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.primaryColor,

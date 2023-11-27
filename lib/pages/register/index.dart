@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:optimum/app_colors.dart';
-import "package:optimum/pages/register/form.dart";
+import 'package:optimum/managers/user.manager.dart';
 
 class Register extends StatefulWidget {
-  const Register({super.key});
+  final UserManager userManager;
+
+  const Register({super.key, required this.userManager});
 
   @override
   State<Register> createState() => _RegisterState();
@@ -142,11 +144,9 @@ class _RegisterState extends State<Register> {
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: () {
-                  String role = selected == 1 ? "Patient" : "Doctor";
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => RegisterUser(role: role)));
+                  String role = selected == 1 ? "PATIENT" : "DOCTOR";
+                  widget.userManager.setRole(role);
+                  Navigator.pushNamed(context, "/register/form");
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.primaryColor,

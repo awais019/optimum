@@ -1,15 +1,14 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart';
 import 'package:optimum/app_colors.dart';
-import 'package:optimum/pages/register/verify_email.dart';
-import 'package:optimum/services/user.service.dart';
+import 'package:optimum/managers/user.manager.dart';
 
 class RegisterUser extends StatefulWidget {
-  final String role;
-
-  const RegisterUser({super.key, required this.role});
+  final UserManager userManager;
+  const RegisterUser({super.key, required this.userManager});
 
   @override
   State<RegisterUser> createState() => _RegisterUserState();
@@ -25,19 +24,16 @@ class _RegisterUserState extends State<RegisterUser> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
-  final UserService userService = UserService();
-
   void handleSubmit() async {
+    setState(() {
+      isLoading = true;
+    });
     try {
-      setState(() {
-        isLoading = true;
-      });
-      Response res = await userService.create(nameController.text,
-          emailController.text, passwordController.text, widget.role);
-
-      setState(() {
-        isLoading = false;
-      });
+      Response res = await widget.userManager.create(
+        nameController.text,
+        emailController.text,
+        passwordController.text,
+      );
 
       final Map<String, dynamic> data = json.decode(res.body);
 
@@ -48,16 +44,17 @@ class _RegisterUserState extends State<RegisterUser> {
       } else {
         if (mounted) {
           error = "";
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) =>
-                      VerifyEmail(email: emailController.text)));
+        }
+        if (mounted) {
+          Navigator.pushNamed(context, "/register/verify_email");
         }
       }
     } catch (e) {
-      debugPrint('An unknown error occurred: $e');
+      Fluttertoast.showToast(msg: "Something went wrong!");
     }
+    setState(() {
+      isLoading = false;
+    });
   }
 
   @override

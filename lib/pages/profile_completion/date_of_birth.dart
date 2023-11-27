@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:http/http.dart';
+
 import 'package:optimum/app_colors.dart';
+import 'package:optimum/managers/user.manager.dart';
 
 class DOB extends StatefulWidget {
-  const DOB({super.key});
+  final UserManager userManager;
+
+  const DOB({super.key, required this.userManager});
 
   @override
   State<DOB> createState() => _DOBState();
@@ -19,7 +25,32 @@ class _DOBState extends State<DOB> {
 
   bool loading = false;
 
-  String role = "PATIENT";
+  handleNext() async {
+    if (widget.userManager.getRole == "DOCTOR") {
+      return;
+    }
+
+    setState(() {
+      loading = true;
+    });
+    widget.userManager
+        .setDOB(DateTime(selectedYear!, selectedMonth!, selectedDay!));
+    try {
+      Response res = await widget.userManager.updatePatientProfile();
+      if (res.statusCode != 200) {
+        Fluttertoast.showToast(msg: "Something went wrong!");
+        return;
+      }
+      if (mounted) {
+        Navigator.pushNamed(context, "/");
+      }
+    } catch (e) {
+      Fluttertoast.showToast(msg: "Something went wrong!");
+    }
+    setState(() {
+      loading = false;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +92,7 @@ class _DOBState extends State<DOB> {
                         fontWeight: FontWeight.w500,
                       )),
                   TextSpan(
-                      text: role == "DOCTOR" ? "5" : "2",
+                      text: widget.userManager.getRole == "DOCTOR" ? "5" : "2",
                       style: const TextStyle(
                         color: AppColors.darkNeutrals100,
                         fontSize: 16.0,
@@ -101,16 +132,19 @@ class _DOBState extends State<DOB> {
                   ),
                 ],
               ),
-              if (role == "DOCTOR") const SizedBox(width: 4.0),
-              if (role == "DOCTOR")
+              if (widget.userManager.getRole == "DOCTOR")
+                const SizedBox(width: 4.0),
+              if (widget.userManager.getRole == "DOCTOR")
                 const Icon(Icons.circle,
                     color: AppColors.darkNeutrals500, size: 8.0),
-              if (role == "DOCTOR") const SizedBox(width: 4.0),
-              if (role == "DOCTOR")
+              if (widget.userManager.getRole == "DOCTOR")
+                const SizedBox(width: 4.0),
+              if (widget.userManager.getRole == "DOCTOR")
                 const Icon(Icons.circle,
                     color: AppColors.darkNeutrals500, size: 8.0),
-              if (role == "DOCTOR") const SizedBox(width: 4.0),
-              if (role == "DOCTOR")
+              if (widget.userManager.getRole == "DOCTOR")
+                const SizedBox(width: 4.0),
+              if (widget.userManager.getRole == "DOCTOR")
                 const Icon(Icons.circle,
                     color: AppColors.darkNeutrals500, size: 8.0),
               const SizedBox(width: 16.0)
@@ -300,7 +334,9 @@ class _DOBState extends State<DOB> {
                         yearEntered = false;
                       });
                     }
-                    if (dayEntered && monthEntered && yearEntered) {}
+                    if (dayEntered && monthEntered && yearEntered) {
+                      handleNext();
+                    }
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.primaryColor,
@@ -312,7 +348,7 @@ class _DOBState extends State<DOB> {
                     padding: const EdgeInsets.symmetric(
                         vertical: 16.0, horizontal: 32.0),
                   ),
-                  child: (role == "PATIENT" && loading)
+                  child: loading
                       ? const SizedBox(
                           height: 24.0,
                           width: 24.0,

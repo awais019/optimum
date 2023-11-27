@@ -1,12 +1,15 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 import 'package:optimum/app_colors.dart';
-import 'package:optimum/services/auth.service.dart';
+import 'package:optimum/managers/user.manager.dart';
 import "package:fluttertoast/fluttertoast.dart";
 
 class VerifyEmail extends StatefulWidget {
-  final String email;
+  final UserManager userManager;
 
-  const VerifyEmail({super.key, required this.email});
+  const VerifyEmail({super.key, required this.userManager});
 
   @override
   State<VerifyEmail> createState() => _VerifyEmailState();
@@ -18,9 +21,37 @@ class _VerifyEmailState extends State<VerifyEmail> {
 
   TextEditingController codeController = TextEditingController();
 
+  void handleVerifyEmail() async {
+    setState(() {
+      isLoading = true;
+    });
+    try {
+      Response res =
+          await widget.userManager.verifyEmail(int.parse(codeController.text));
+
+      setState(() {
+        isLoading = false;
+      });
+      Map<String, dynamic> data = jsonDecode(res.body);
+      if (res.statusCode != 200) {
+        Fluttertoast.showToast(msg: data["message"]);
+        return;
+      }
+      widget.userManager.setToken(data["data"]["token"]);
+      if (mounted) {
+        Navigator.pushNamed(context, "/profile_completion/gender");
+      }
+    } catch (e) {
+      Fluttertoast.showToast(msg: "Something went wrong!");
+    }
+    setState(() {
+      isLoading = false;
+    });
+  }
+
   void handleResend() async {
     try {
-      await AuthService.resendEmail(widget.email);
+      widget.userManager.resendEmail();
       Fluttertoast.showToast(msg: "Email sent");
     } catch (e) {
       Fluttertoast.showToast(msg: "Something went wrong!");
@@ -108,7 +139,7 @@ class _VerifyEmailState extends State<VerifyEmail> {
                   SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: handleVerifyEmail,
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppColors.primaryColor,
                         elevation: 16,

@@ -1,16 +1,24 @@
 import 'package:flutter/material.dart';
+
+// pages
 import 'package:optimum/pages/splash_screen.dart';
 import 'package:optimum/pages/register/index.dart';
+import 'package:optimum/pages/register/form.dart';
+import 'package:optimum/pages/register/verify_email.dart';
 import 'package:optimum/pages/profile_completion/gender.dart';
 import 'package:optimum/pages/profile_completion/date_of_birth.dart';
 import 'package:optimum/pages/home.dart';
 
+// data managers
+import 'package:optimum/managers/user.manager.dart';
+
 void main() async {
-  runApp(const Optimum());
+  runApp(Optimum());
 }
 
 class Optimum extends StatelessWidget {
-  const Optimum({super.key});
+  final UserManager userManager = UserManager();
+  Optimum({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -23,9 +31,13 @@ class Optimum extends StatelessWidget {
       routes: {
         "/splash": (context) => const SplashScreen(),
         "/": (context) => const Home(),
-        "/register": (context) => const Register(),
-        "/gender": (context) => const Gender(),
-        "/dob": (context) => const DOB(),
+        "/register": (context) => Register(userManager: userManager),
+        "/register/form": (context) => RegisterUser(userManager: userManager),
+        "/register/verify_email": (context) =>
+            VerifyEmail(userManager: userManager),
+        "/profile_completion/gender": (context) =>
+            Gender(userManager: userManager),
+        "/profile_completion/dob": (context) => DOB(userManager: userManager),
       },
     );
   }
