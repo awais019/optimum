@@ -5,43 +5,28 @@ import 'package:optimum/pages/profile_completion/gender.dart';
 import 'package:optimum/pages/profile_completion/date_of_birth.dart';
 import 'package:optimum/pages/home.dart';
 
-import 'package:flutter_redux/flutter_redux.dart';
-import 'package:redux/redux.dart';
-
-import 'package:optimum/models/app.dart';
-import 'package:optimum/models/user.dart';
-import 'package:optimum/models/auth.dart';
-import 'package:optimum/redux/reducers.dart';
-
 void main() async {
-  final store = Store<AppState>(appStateReducer,
-      initialState: AppState.initialState(User("", "", ""),
-          AuthState(status: AuthStatus.notAuthenticated, authToken: "")));
-  runApp(Optimum(store: store));
+  runApp(const Optimum());
 }
 
 class Optimum extends StatelessWidget {
-  final Store<AppState> store;
-
-  const Optimum({super.key, required this.store});
+  const Optimum({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return StoreProvider<AppState>(
-      store: store,
-      child: MaterialApp(
-          title: 'Optimum',
-          theme: ThemeData(
-              fontFamily: 'Plus Jakarta Sans',
-              scaffoldBackgroundColor: Colors.white),
-          initialRoute: "/splash",
-          routes: {
-            "/splash": (context) => const SplashScreen(),
-            "/": (context) => const Home(),
-            "/register": (context) => const Register(),
-            "/gender": (context) => const Gender(),
-            "/dob": (context) => const DOB(),
-          }),
+    return MaterialApp(
+      title: 'Optimum',
+      theme: ThemeData(
+          fontFamily: 'Plus Jakarta Sans',
+          scaffoldBackgroundColor: Colors.white),
+      initialRoute: "/splash",
+      routes: {
+        "/splash": (context) => const SplashScreen(),
+        "/": (context) => const Home(),
+        "/register": (context) => const Register(),
+        "/gender": (context) => const Gender(),
+        "/dob": (context) => const DOB(),
+      },
     );
   }
 }

@@ -1,8 +1,6 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-import 'package:optimum/models/user.dart';
-
 class AuthService {
   static final baseURL = Uri.parse('http://10.0.2.2:4000');
 
@@ -25,7 +23,7 @@ class AuthService {
   }
 
   static Future<http.Response> updatePatientProfile(
-      User user, String authToken) {
+      var user, String authToken) {
     final updateURI = baseURL.resolve("/api/auth/me");
     return http.put(updateURI,
         headers: {
