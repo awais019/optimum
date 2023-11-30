@@ -146,6 +146,7 @@ class _ChargesState extends State<Charges> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           IconButton(
                             onPressed: () {
@@ -153,23 +154,30 @@ class _ChargesState extends State<Charges> {
                                 physicalToggle = !physicalToggle;
                               });
                             },
-                            icon: Icon(
-                              physicalToggle
-                                  ? Icons.toggle_on
-                                  : Icons.toggle_off,
-                              color: AppColors.primaryColor,
-                              size: 32.0,
-                            ),
+                            icon: physicalToggle
+                                ? const Icon(
+                                    Icons.toggle_on,
+                                    color: AppColors.primaryColor,
+                                    size: 40.0,
+                                  )
+                                : const Icon(
+                                    Icons.toggle_off,
+                                    color: AppColors.darkNeutrals50,
+                                    size: 40.0,
+                                  ),
                           ),
+                          const SizedBox(width: 4.0),
                           const Text("Physical",
                               style: TextStyle(
                                   color: AppColors.darkNeutrals500,
                                   fontSize: 16.0,
+                                  height: 1.5,
                                   fontWeight: FontWeight.w500)),
                         ],
                       ),
                       TextFormField(
                         controller: physicalCharges,
+                        enabled: physicalToggle,
                         decoration: InputDecoration(
                             hintText: 'Physical Charges',
                             hintStyle: const TextStyle(
@@ -190,6 +198,11 @@ class _ChargesState extends State<Charges> {
                                   color: AppColors.darkNeutrals50, width: 1.0),
                               borderRadius: BorderRadius.circular(8.0),
                             ),
+                            disabledBorder: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                  color: AppColors.darkNeutrals50, width: 1.0),
+                              borderRadius: BorderRadius.circular(8.0),
+                            ),
                             errorBorder: const OutlineInputBorder(
                                 borderSide:
                                     BorderSide(color: Colors.red, width: 1.0))),
@@ -205,6 +218,7 @@ class _ChargesState extends State<Charges> {
                       ),
                       const SizedBox(height: 24.0),
                       Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           IconButton(
                             onPressed: () {
@@ -212,23 +226,30 @@ class _ChargesState extends State<Charges> {
                                 virtualToggle = !virtualToggle;
                               });
                             },
-                            icon: Icon(
-                              virtualToggle
-                                  ? Icons.toggle_on
-                                  : Icons.toggle_off,
-                              color: AppColors.primaryColor,
-                              size: 32.0,
-                            ),
+                            icon: virtualToggle
+                                ? const Icon(
+                                    Icons.toggle_on,
+                                    color: AppColors.primaryColor,
+                                    size: 40.0,
+                                  )
+                                : const Icon(
+                                    Icons.toggle_off,
+                                    color: AppColors.darkNeutrals50,
+                                    size: 40.0,
+                                  ),
                           ),
+                          const SizedBox(width: 4.0),
                           const Text("Virtual",
                               style: TextStyle(
                                   color: AppColors.darkNeutrals500,
                                   fontSize: 16.0,
+                                  height: 1.5,
                                   fontWeight: FontWeight.w500)),
                         ],
                       ),
                       TextFormField(
                         controller: virtualCharges,
+                        enabled: virtualToggle,
                         decoration: InputDecoration(
                             hintText: 'Virtual charges',
                             hintStyle: const TextStyle(
@@ -245,6 +266,11 @@ class _ChargesState extends State<Charges> {
                                   color: AppColors.primaryColor, width: 1.0),
                             ),
                             enabledBorder: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                  color: AppColors.darkNeutrals50, width: 1.0),
+                              borderRadius: BorderRadius.circular(8.0),
+                            ),
+                            disabledBorder: OutlineInputBorder(
                               borderSide: const BorderSide(
                                   color: AppColors.darkNeutrals50, width: 1.0),
                               borderRadius: BorderRadius.circular(8.0),
