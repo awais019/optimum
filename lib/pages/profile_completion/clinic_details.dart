@@ -330,15 +330,23 @@ class ClinicDetails extends StatelessWidget {
                       ),
                     ])),
             const SizedBox(height: 32.0),
-            SizedBox(
+            Container(
               width: double.infinity,
+              decoration: const BoxDecoration(
+                boxShadow: [
+                  BoxShadow(
+                    color: Color.fromRGBO(230, 126, 26, 0.15),
+                    blurRadius: 16.0,
+                    offset: Offset(0, 8.0),
+                  ),
+                ],
+              ),
               child: ElevatedButton(
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {}
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.primaryColor,
-                  elevation: 16,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(32.0),
                   ),
