@@ -216,7 +216,7 @@ class ClinicDetails extends StatelessWidget {
                             child: TextFormField(
                               controller: cityController,
                               decoration: InputDecoration(
-                                  hintText: 'Clinic Name',
+                                  hintText: 'City',
                                   hintStyle: const TextStyle(
                                       color: AppColors.darkNeutrals100,
                                       fontSize: 16.0,
@@ -254,7 +254,7 @@ class ClinicDetails extends StatelessWidget {
                           const SizedBox(width: 24.0),
                           Expanded(
                             child: TextFormField(
-                              controller: nameController,
+                              controller: stateController,
                               decoration: InputDecoration(
                                   hintText: 'State',
                                   hintStyle: const TextStyle(
@@ -343,7 +343,9 @@ class ClinicDetails extends StatelessWidget {
               ),
               child: ElevatedButton(
                 onPressed: () {
-                  if (_formKey.currentState!.validate()) {}
+                  if (_formKey.currentState!.validate()) {
+                    Navigator.pushNamed(context, "/profile_completion/charges");
+                  }
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.primaryColor,

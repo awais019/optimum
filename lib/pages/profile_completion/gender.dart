@@ -235,7 +235,12 @@ class _GenderState extends State<Gender> {
                 child: ElevatedButton(
                   onPressed: () {
                     widget.userManager.setGender(_selectedGender!.value);
-                    Navigator.pushNamed(context, "/profile_completion/dob");
+                    if (widget.userManager.getRole == "DOCTOR") {
+                      Navigator.pushNamed(
+                          context, "/profile_completion/experience");
+                    } else {
+                      Navigator.pushNamed(context, "/profile_completion/dob");
+                    }
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.primaryColor,

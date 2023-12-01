@@ -114,7 +114,6 @@ class _ChargesState extends State<Charges> {
       body: Padding(
         padding: const EdgeInsets.fromLTRB(24.0, 0, 24.0, 24.0),
         child: ListView(
-          // crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(height: 48.0),
             RichText(
@@ -304,7 +303,10 @@ class _ChargesState extends State<Charges> {
               ),
               child: ElevatedButton(
                 onPressed: () {
-                  if (_formKey.currentState!.validate()) {}
+                  if (_formKey.currentState!.validate()) {
+                    Navigator.pushNamed(
+                        context, "/profile_completion/schedule");
+                  }
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.primaryColor,

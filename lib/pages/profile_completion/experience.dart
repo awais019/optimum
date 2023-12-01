@@ -113,8 +113,7 @@ class _ExperienceState extends State<Experience> {
       ),
       body: Padding(
         padding: const EdgeInsets.fromLTRB(24.0, 0, 24.0, 24.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: ListView(
           children: [
             const SizedBox(height: 48.0),
             RichText(
@@ -243,12 +242,15 @@ class _ExperienceState extends State<Experience> {
                               fontWeight: FontWeight.w500,
                             )),
                     ])),
-            const Spacer(),
+            const SizedBox(height: 32.0),
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: () {
-                  if (_formKey.currentState!.validate()) {}
+                  if (_formKey.currentState!.validate()) {
+                    Navigator.pushNamed(
+                        context, '/profile_completion/clinic_details');
+                  }
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.primaryColor,
