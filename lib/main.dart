@@ -10,6 +10,7 @@ import 'package:optimum/pages/profile_completion/date_of_birth.dart';
 import 'package:optimum/pages/profile_completion/experience.dart';
 import 'package:optimum/pages/profile_completion/clinic_details.dart';
 import 'package:optimum/pages/profile_completion/charges.dart';
+import 'package:optimum/pages/profile_completion/schedule.dart';
 import 'package:optimum/pages/home.dart';
 
 // data managers
@@ -28,9 +29,10 @@ class Optimum extends StatelessWidget {
     return MaterialApp(
       title: 'Optimum',
       theme: ThemeData(
-          fontFamily: 'Plus Jakarta Sans',
-          scaffoldBackgroundColor: Colors.white),
-      initialRoute: "/profile_completion/charges",
+        fontFamily: 'Plus Jakarta Sans',
+        scaffoldBackgroundColor: Colors.white,
+      ),
+      initialRoute: "/profile_completion/schedule",
       routes: {
         "/splash": (context) => const SplashScreen(),
         "/": (context) => const Home(),
@@ -44,6 +46,7 @@ class Optimum extends StatelessWidget {
         "/profile_completion/experience": (context) => const Experience(),
         "/profile_completion/clinic_details": (context) => ClinicDetails(),
         "/profile_completion/charges": (context) => const Charges(),
+        "/profile_completion/schedule": (context) => const Schedule(),
       },
     );
   }
