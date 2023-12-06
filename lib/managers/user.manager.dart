@@ -64,16 +64,14 @@ class UserManager {
         body: jsonEncode({"email": _user.email}));
   }
 
-  Future<http.Response> updatePatientProfile() {
-    final updateURI = baseURL.resolve("/api/auth/me");
-    return http.put(updateURI,
+  Future<http.Response> createPatient() {
+    final updateURI = baseURL.resolve("/api/patient/");
+    return http.post(updateURI,
         headers: {
           'Content-Type': 'application/json; charset=UTF-8',
           'x-auth-token': _token,
         },
         body: jsonEncode({
-          "name": _user.name,
-          "role": _user.role,
           "gender": _user.gender,
           "dob": _user.dob.toString(),
         }));

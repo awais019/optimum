@@ -36,10 +36,10 @@ class _DOBState extends State<DOB> {
     widget.userManager
         .setDOB(DateTime(selectedYear!, selectedMonth!, selectedDay!));
     try {
-      Response res = await widget.userManager.updatePatientProfile();
+      Response res = await widget.userManager.createPatient();
+      debugPrint(res.statusCode.toString());
       if (res.statusCode != 200) {
         Fluttertoast.showToast(msg: "Something went wrong!");
-        return;
       }
       if (mounted) {
         Navigator.pushNamed(context, "/");
