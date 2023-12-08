@@ -1,16 +1,53 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:http/http.dart';
 import 'package:optimum/app_colors.dart';
+import 'package:optimum/managers/user.manager.dart';
 
-class ClinicDetails extends StatelessWidget {
-  ClinicDetails({super.key});
+class ClinicDetails extends StatefulWidget {
+  final UserManager userManager;
 
+  const ClinicDetails({super.key, required this.userManager});
+
+  @override
+  State<ClinicDetails> createState() => _ClinicDetailsState();
+}
+
+class _ClinicDetailsState extends State<ClinicDetails> {
   final _formKey = GlobalKey<FormState>();
 
   final nameController = TextEditingController();
+
   final addressController = TextEditingController();
+
   final cityController = TextEditingController();
+
   final stateController = TextEditingController();
+
   final zipCodeController = TextEditingController();
+
+  Future<bool> handleNext() async {
+    try {
+      Response res = await widget.userManager.createDoctorLocation(
+          nameController.text,
+          addressController.text,
+          cityController.text,
+          stateController.text,
+          zipCodeController.text);
+
+      final Map<String, dynamic> data = json.decode(res.body);
+
+      if (res.statusCode != 200) {
+        Fluttertoast.showToast(msg: data["message"]);
+        return false;
+      }
+    } catch (e) {
+      Fluttertoast.showToast(msg: "Something went wrong!");
+    }
+    return true;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -342,9 +379,14 @@ class ClinicDetails extends StatelessWidget {
                 ],
               ),
               child: ElevatedButton(
-                onPressed: () {
+                onPressed: () async {
                   if (_formKey.currentState!.validate()) {
-                    Navigator.pushNamed(context, "/profile_completion/charges");
+                    if (await handleNext()) {
+                      if (mounted) {
+                        Navigator.pushNamed(
+                            context, "/profile_completion/charges");
+                      }
+                    }
                   }
                 },
                 style: ElevatedButton.styleFrom(

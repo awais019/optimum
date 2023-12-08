@@ -102,4 +102,22 @@ class UserManager {
 
     return request.send();
   }
+
+  Future<http.Response> createDoctorLocation(String clinicName, String address,
+      String city, String state, String zipCode) {
+    final updateURI = baseURL.resolve("/api/doctor/location");
+
+    return http.post(updateURI,
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+          'x-auth-token': _token,
+        },
+        body: jsonEncode({
+          "clinicName": clinicName,
+          "address": address,
+          "city": city,
+          "state": state,
+          "zipCode": zipCode,
+        }));
+  }
 }

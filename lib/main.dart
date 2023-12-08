@@ -45,7 +45,8 @@ class Optimum extends StatelessWidget {
         "/profile_completion/dob": (context) => DOB(userManager: userManager),
         "/profile_completion/experience": (context) =>
             Experience(userManager: userManager),
-        "/profile_completion/clinic_details": (context) => ClinicDetails(),
+        "/profile_completion/clinic_details": (context) =>
+            ClinicDetails(userManager: userManager),
         "/profile_completion/charges": (context) => const Charges(),
         "/profile_completion/schedule": (context) => const Schedule(),
       },
