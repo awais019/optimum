@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:typed_data';
 
 import 'package:http/http.dart' as http;
 import 'package:optimum/models/user.model.dart';
@@ -6,7 +7,7 @@ import 'package:optimum/models/user.model.dart';
 class UserManager {
   final User _user = User.init();
   String _token = "";
-  static final baseURL = Uri.parse('http://10.0.2.2:4000');
+  static final baseURL = Uri.parse('http://127.0.0.1:4000');
 
   setRole(String role) {
     _user.role = role;
@@ -75,5 +76,30 @@ class UserManager {
           "gender": _user.gender,
           "dob": _user.dob.toString(),
         }));
+  }
+
+  Future<http.StreamedResponse> createDoctor(
+      int experience, Uint8List fileBytes, String fileName) {
+    final updateURI = baseURL.resolve("/api/doctor/");
+
+    http.MultipartRequest request = http.MultipartRequest('POST', updateURI);
+
+    request.headers.addAll({
+      'Content-Type': 'multipart/form-data',
+      'x-auth-token': _token,
+    });
+
+    request.files.add(http.MultipartFile.fromBytes(
+      'file',
+      fileBytes,
+      filename: fileName,
+    ));
+
+    request.fields.addAll({
+      'gender': _user.gender!,
+      'experience': experience.toString(),
+    });
+
+    return request.send();
   }
 }

@@ -1,11 +1,14 @@
-import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:optimum/app_colors.dart';
+import 'package:optimum/managers/user.manager.dart';
 
 class Experience extends StatefulWidget {
-  const Experience({super.key});
+  final UserManager userManager;
+
+  const Experience({super.key, required this.userManager});
 
   @override
   State<Experience> createState() => _ExperienceState();
@@ -13,9 +16,16 @@ class Experience extends StatefulWidget {
 
 class _ExperienceState extends State<Experience> {
   final _formKey = GlobalKey<FormState>();
-  File _file = File('');
+  Uint8List? _fileBytes;
+  String? _fileName;
 
   TextEditingController experienceController = TextEditingController();
+
+  handleNext() async {
+    widget.userManager.createDoctor(
+        int.parse(experienceController.text), _fileBytes!, _fileName!);
+    Navigator.pushNamed(context, '/profile_completion/clinic_details');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -196,7 +206,8 @@ class _ExperienceState extends State<Experience> {
                             );
                             if (result != null) {
                               setState(() {
-                                _file = File(result.files.single.path!);
+                                _fileName = result.files.first.name;
+                                _fileBytes = result.files.first.bytes;
                               });
                             }
                           },
@@ -219,22 +230,22 @@ class _ExperienceState extends State<Experience> {
                             ),
                           )),
                       const SizedBox(height: 24.0),
-                      if (_file.path.isNotEmpty)
+                      if (_fileName != null)
                         Row(
                           children: [
                             Image.asset("assets/icons/upload.png"),
                             const SizedBox(width: 8.0),
-                            Text(_file.path.split('/').last,
+                            Text(_fileName!,
                                 style: const TextStyle(
                                   color: AppColors.primaryColor,
                                   fontSize: 16.0,
                                   height: 1.5,
                                   fontWeight: FontWeight.w500,
-                                )),
+                                ))
                           ],
                         ),
-                      if (_file.path.isEmpty)
-                        const Text("No file choosen",
+                      if (_fileName == null)
+                        const Text("No file chosen",
                             style: TextStyle(
                               color: AppColors.darkNeutrals500,
                               fontSize: 14.0,
@@ -247,9 +258,8 @@ class _ExperienceState extends State<Experience> {
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: () {
-                  if (_formKey.currentState!.validate()) {
-                    Navigator.pushNamed(
-                        context, '/profile_completion/clinic_details');
+                  if (_formKey.currentState!.validate() && _fileName != null) {
+                    handleNext();
                   }
                 },
                 style: ElevatedButton.styleFrom(

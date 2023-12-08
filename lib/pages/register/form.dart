@@ -42,9 +42,7 @@ class _RegisterUserState extends State<RegisterUser> {
           error = data["message"];
         });
       } else {
-        if (mounted) {
-          error = "";
-        }
+        error = "";
         if (mounted) {
           Navigator.pushNamed(context, "/register/verify_email");
         }
