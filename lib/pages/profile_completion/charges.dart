@@ -1,8 +1,15 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:http/http.dart';
 import 'package:optimum/app_colors.dart';
+import 'package:optimum/managers/user.manager.dart';
 
 class Charges extends StatefulWidget {
-  const Charges({super.key});
+  final UserManager userManager;
+
+  const Charges({super.key, required this.userManager});
 
   @override
   State<Charges> createState() => _ChargesState();
@@ -16,6 +23,37 @@ class _ChargesState extends State<Charges> {
 
   bool physicalToggle = true;
   bool virtualToggle = false;
+
+  handleNext() async {
+    List<dynamic> charges = [];
+
+    if (physicalToggle) {
+      charges.add({
+        "appointment_type": "PHYSICAL",
+        "charges": double.parse(physicalCharges.text)
+      });
+    }
+    if (virtualToggle) {
+      charges.add({
+        "appointment_type": "VIRTUAL",
+        "charges": double.parse(virtualCharges.text)
+      });
+    }
+
+    try {
+      Response res = await widget.userManager.createDoctorCharges(charges);
+
+      final Map<String, dynamic> data = json.decode(res.body);
+
+      if (res.statusCode != 200) {
+        Fluttertoast.showToast(msg: data["message"]);
+        return false;
+      }
+    } catch (e) {
+      Fluttertoast.showToast(msg: "Something went wrong!");
+    }
+    return true;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -278,11 +316,13 @@ class _ChargesState extends State<Charges> {
                                 borderSide:
                                     BorderSide(color: Colors.red, width: 1.0))),
                         validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return "Virtual Charges is required";
-                          } else if (double.tryParse(value) == null ||
-                              double.tryParse(value)! <= 0) {
-                            return "Virtual Charges must be a positive number";
+                          if (virtualToggle) {
+                            if (value == null || value.isEmpty) {
+                              return "Virtual Charges is required";
+                            } else if (double.tryParse(value) == null ||
+                                double.tryParse(value)! <= 0) {
+                              return "Virtual Charges must be a positive number";
+                            }
                           }
                           return null;
                         },
@@ -302,10 +342,14 @@ class _ChargesState extends State<Charges> {
                 ],
               ),
               child: ElevatedButton(
-                onPressed: () {
+                onPressed: () async {
                   if (_formKey.currentState!.validate()) {
-                    Navigator.pushNamed(
-                        context, "/profile_completion/schedule");
+                    if (await handleNext()) {
+                      if (mounted) {
+                        Navigator.pushNamed(
+                            context, "/profile_completion/schedule");
+                      }
+                    }
                   }
                 },
                 style: ElevatedButton.styleFrom(

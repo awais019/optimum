@@ -120,4 +120,15 @@ class UserManager {
           "zipCode": zipCode,
         }));
   }
+
+  Future<http.Response> createDoctorCharges(var charges) {
+    final updateURI = baseURL.resolve("/api/doctor/charges");
+
+    return http.post(updateURI,
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+          'x-auth-token': _token,
+        },
+        body: jsonEncode(charges));
+  }
 }

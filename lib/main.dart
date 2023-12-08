@@ -47,7 +47,8 @@ class Optimum extends StatelessWidget {
             Experience(userManager: userManager),
         "/profile_completion/clinic_details": (context) =>
             ClinicDetails(userManager: userManager),
-        "/profile_completion/charges": (context) => const Charges(),
+        "/profile_completion/charges": (context) =>
+            Charges(userManager: userManager),
         "/profile_completion/schedule": (context) => const Schedule(),
       },
     );
