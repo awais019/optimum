@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
-import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:optimum/models/user.model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -16,7 +15,6 @@ class UserManager {
   UserManager() {
     _prefs.then((SharedPreferences prefs) {
       _token = prefs.getString('token') ?? '';
-      debugPrint('token: $_token');
     });
   }
 
