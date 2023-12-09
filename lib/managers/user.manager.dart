@@ -170,3 +170,5 @@ class UserManager {
     );
   }
 }
+
+UserManager userManager = UserManager();

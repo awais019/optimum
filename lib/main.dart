@@ -20,12 +20,12 @@ import 'package:optimum/managers/user.manager.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(Optimum());
+  runApp(const Optimum());
 }
 
 class Optimum extends StatelessWidget {
-  final UserManager userManager = UserManager();
-  Optimum({super.key});
+  // final UserManager userManager = UserManager();
+  const Optimum({super.key});
 
   String getInitialRoute() {
     if (userManager.isLoggedIn) {
