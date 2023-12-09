@@ -6,16 +6,20 @@ import 'package:optimum/managers/user.manager.dart';
 
 class DoctorManager {
   List<Doctor>? _doctors;
-  final baseURI = Uri.parse("http://10.0.2.2/");
+  final baseURI = Uri.parse("http://10.0.2.2:4000");
 
   Future<void> fetchDoctors() async {
     final getURI = baseURI.resolve("/api/doctor");
+
     final response = await http.get(getURI, headers: {
       "x-auth-toke": userManager.getToken,
     });
     if (response.statusCode == 200) {
-      final data = jsonDecode(response.body);
-      _doctors = data.map((doctor) => Doctor.fromJson(doctor)).toList();
+      _doctors = [];
+      final data = jsonDecode(response.body) as Map<String, dynamic>;
+      for (var json in data["data"]) {
+        _doctors!.add(Doctor.fromJson(json));
+      }
     } else {
       throw Exception("Failed to fetch doctors");
     }

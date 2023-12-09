@@ -50,7 +50,6 @@ class _RegisterUserState extends State<RegisterUser> {
         }
       }
     } catch (e) {
-      debugPrint('$e');
       Fluttertoast.showToast(msg: "Something went wrong!");
     }
     setState(() {
