@@ -128,7 +128,7 @@ class _ScheduleState extends State<Schedule> {
           Fluttertoast.showToast(msg: data["message"]);
           return;
         } else if (mounted) {
-          Navigator.pushNamed(context, "/");
+          Navigator.pushNamed(context, "/profile_completion/completed");
         }
       } catch (e) {
         Fluttertoast.showToast(msg: "Something went wrong!");

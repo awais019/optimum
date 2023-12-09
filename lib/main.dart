@@ -11,6 +11,7 @@ import 'package:optimum/pages/profile_completion/experience.dart';
 import 'package:optimum/pages/profile_completion/clinic_details.dart';
 import 'package:optimum/pages/profile_completion/charges.dart';
 import 'package:optimum/pages/profile_completion/schedule.dart';
+import 'package:optimum/pages/profile_completion/completed.dart';
 import 'package:optimum/pages/home.dart';
 
 // data managers
@@ -24,6 +25,13 @@ class Optimum extends StatelessWidget {
   final UserManager userManager = UserManager();
   Optimum({super.key});
 
+  String getInitialRoute() {
+    if (userManager.isLoggedIn) {
+      return "/";
+    }
+    return "/splash";
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -32,7 +40,7 @@ class Optimum extends StatelessWidget {
         fontFamily: 'Plus Jakarta Sans',
         scaffoldBackgroundColor: Colors.white,
       ),
-      initialRoute: userManager.isLoggedIn ? "/" : "/splash",
+      initialRoute: getInitialRoute(),
       routes: {
         "/splash": (context) => const SplashScreen(),
         "/": (context) => const Home(),
@@ -51,6 +59,7 @@ class Optimum extends StatelessWidget {
             Charges(userManager: userManager),
         "/profile_completion/schedule": (context) =>
             Schedule(userManager: userManager),
+        "/profile_completion/completed": (context) => const Completed(),
       },
     );
   }
