@@ -1,16 +1,21 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:http/http.dart';
 import 'package:optimum/app_colors.dart';
+import 'package:optimum/managers/user.manager.dart';
 
 class Schedule extends StatefulWidget {
-  const Schedule({super.key});
+  final UserManager userManager;
+
+  const Schedule({super.key, required this.userManager});
 
   @override
   State<Schedule> createState() => _ScheduleState();
 }
 
 class _ScheduleState extends State<Schedule> {
-  final _formKey = GlobalKey<FormState>();
-
   final physicalCharges = TextEditingController();
   final virtualCharges = TextEditingController();
 
@@ -19,47 +24,117 @@ class _ScheduleState extends State<Schedule> {
   List<WorkingHours> workingHours = [
     WorkingHours(
       day: "Monday",
-      isWorking: false,
+      isActive: false,
+      slotDuration: 15,
       startTime: "08:00",
       endTime: "17:00",
     ),
     WorkingHours(
       day: "Tuesday",
-      isWorking: false,
+      isActive: false,
+      slotDuration: 15,
       startTime: "08:00",
       endTime: "17:00",
     ),
     WorkingHours(
       day: "Wednesday",
-      isWorking: false,
+      isActive: false,
+      slotDuration: 15,
       startTime: "08:00",
       endTime: "17:00",
     ),
     WorkingHours(
       day: "Thursday",
-      isWorking: false,
+      isActive: false,
+      slotDuration: 15,
       startTime: "08:00",
       endTime: "17:00",
     ),
     WorkingHours(
       day: "Friday",
-      isWorking: false,
+      isActive: false,
+      slotDuration: 15,
       startTime: "08:00",
       endTime: "17:00",
     ),
     WorkingHours(
       day: "Saturday",
-      isWorking: false,
+      isActive: false,
+      slotDuration: 15,
       startTime: "08:00",
       endTime: "17:00",
     ),
     WorkingHours(
       day: "Sunday",
-      isWorking: false,
+      isActive: false,
+      slotDuration: 15,
       startTime: "08:00",
       endTime: "17:00",
     ),
   ];
+
+  bool atLeastOneDaySelected() {
+    for (WorkingHours workingHour in workingHours) {
+      if (workingHour.isActive) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  bool isValid() {
+    for (WorkingHours workingHour in workingHours) {
+      if (workingHour.isActive) {
+        if (workingHour.startTime == workingHour.endTime) {
+          return false;
+        }
+      }
+    }
+    return true;
+  }
+
+  handleNext() async {
+    if (!atLeastOneDaySelected()) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("Please select at least one day"),
+        ),
+      );
+      return;
+    } else if (!isValid()) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("Start time and end time cannot be same"),
+        ),
+      );
+      return;
+    } else {
+      for (WorkingHours workingHour in workingHours) {
+        workingHour.slotDuration = slotDuration;
+      }
+      try {
+        final List<Map<String, dynamic>> workingHoursJson = [];
+
+        for (WorkingHours workingHour in workingHours) {
+          workingHoursJson.add(workingHour.toJson());
+        }
+
+        Response res =
+            await widget.userManager.createDoctorSchedule(workingHoursJson);
+
+        final Map<String, dynamic> data = json.decode(res.body);
+
+        if (res.statusCode != 200) {
+          Fluttertoast.showToast(msg: data["message"]);
+          return;
+        } else if (mounted) {
+          Navigator.pushNamed(context, "/");
+        }
+      } catch (e) {
+        Fluttertoast.showToast(msg: "Something went wrong!");
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -330,10 +405,10 @@ class _ScheduleState extends State<Schedule> {
                       IconButton(
                         onPressed: () {
                           setState(() {
-                            workingHour.isWorking = !workingHour.isWorking;
+                            workingHour.isActive = !workingHour.isActive;
                           });
                         },
-                        icon: workingHour.isWorking
+                        icon: workingHour.isActive
                             ? const Icon(
                                 Icons.toggle_on,
                                 color: AppColors.primaryColor,
@@ -357,7 +432,7 @@ class _ScheduleState extends State<Schedule> {
                     ],
                   ),
                   const SizedBox(height: 8.0),
-                  if (workingHour.isWorking)
+                  if (workingHour.isActive)
                     Row(children: [
                       Expanded(
                         child: DropdownButtonFormField<String>(
@@ -512,9 +587,7 @@ class _ScheduleState extends State<Schedule> {
                 ],
               ),
               child: ElevatedButton(
-                onPressed: () {
-                  if (_formKey.currentState!.validate()) {}
-                },
+                onPressed: handleNext,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.primaryColor,
                   shape: RoundedRectangleBorder(
@@ -542,14 +615,26 @@ class _ScheduleState extends State<Schedule> {
 
 class WorkingHours {
   String day;
-  bool isWorking;
+  bool isActive;
+  int slotDuration;
   String startTime;
   String endTime;
 
   WorkingHours({
     required this.day,
-    required this.isWorking,
+    required this.isActive,
+    required this.slotDuration,
     required this.startTime,
     required this.endTime,
   });
+
+  Map<String, dynamic> toJson() {
+    return {
+      "day": day,
+      "isActive": isActive,
+      "slotDuration": slotDuration,
+      "startTime": startTime,
+      "endTime": endTime,
+    };
+  }
 }

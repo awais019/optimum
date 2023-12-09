@@ -49,7 +49,8 @@ class Optimum extends StatelessWidget {
             ClinicDetails(userManager: userManager),
         "/profile_completion/charges": (context) =>
             Charges(userManager: userManager),
-        "/profile_completion/schedule": (context) => const Schedule(),
+        "/profile_completion/schedule": (context) =>
+            Schedule(userManager: userManager),
       },
     );
   }

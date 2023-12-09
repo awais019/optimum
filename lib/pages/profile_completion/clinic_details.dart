@@ -28,7 +28,7 @@ class _ClinicDetailsState extends State<ClinicDetails> {
 
   final zipCodeController = TextEditingController();
 
-  Future<bool> handleNext() async {
+  handleNext() async {
     try {
       Response res = await widget.userManager.createDoctorLocation(
           nameController.text,
@@ -41,12 +41,14 @@ class _ClinicDetailsState extends State<ClinicDetails> {
 
       if (res.statusCode != 200) {
         Fluttertoast.showToast(msg: data["message"]);
-        return false;
+        return;
+      }
+      if (mounted) {
+        Navigator.pushNamed(context, "/profile_completion/charges");
       }
     } catch (e) {
       Fluttertoast.showToast(msg: "Something went wrong!");
     }
-    return true;
   }
 
   @override
@@ -379,14 +381,9 @@ class _ClinicDetailsState extends State<ClinicDetails> {
                 ],
               ),
               child: ElevatedButton(
-                onPressed: () async {
+                onPressed: () {
                   if (_formKey.currentState!.validate()) {
-                    if (await handleNext()) {
-                      if (mounted) {
-                        Navigator.pushNamed(
-                            context, "/profile_completion/charges");
-                      }
-                    }
+                    handleNext();
                   }
                 },
                 style: ElevatedButton.styleFrom(

@@ -66,8 +66,8 @@ class UserManager {
   }
 
   Future<http.Response> createPatient() {
-    final updateURI = baseURL.resolve("/api/patient/");
-    return http.post(updateURI,
+    final createURI = baseURL.resolve("/api/patient/");
+    return http.post(createURI,
         headers: {
           'Content-Type': 'application/json; charset=UTF-8',
           'x-auth-token': _token,
@@ -80,9 +80,9 @@ class UserManager {
 
   Future<http.StreamedResponse> createDoctor(
       int experience, Uint8List fileBytes, String fileName) {
-    final updateURI = baseURL.resolve("/api/doctor/");
+    final createURI = baseURL.resolve("/api/doctor/");
 
-    http.MultipartRequest request = http.MultipartRequest('POST', updateURI);
+    http.MultipartRequest request = http.MultipartRequest('POST', createURI);
 
     request.headers.addAll({
       'Content-Type': 'multipart/form-data',
@@ -105,9 +105,9 @@ class UserManager {
 
   Future<http.Response> createDoctorLocation(String clinicName, String address,
       String city, String state, String zipCode) {
-    final updateURI = baseURL.resolve("/api/doctor/location");
+    final createURI = baseURL.resolve("/api/doctor/location");
 
-    return http.post(updateURI,
+    return http.post(createURI,
         headers: {
           'Content-Type': 'application/json; charset=UTF-8',
           'x-auth-token': _token,
@@ -122,13 +122,26 @@ class UserManager {
   }
 
   Future<http.Response> createDoctorCharges(var charges) {
-    final updateURI = baseURL.resolve("/api/doctor/charges");
+    final createURI = baseURL.resolve("/api/doctor/charges");
 
-    return http.post(updateURI,
+    return http.post(createURI,
         headers: {
           'Content-Type': 'application/json; charset=UTF-8',
           'x-auth-token': _token,
         },
         body: jsonEncode(charges));
+  }
+
+  Future<http.Response> createDoctorSchedule(var schedule) {
+    final createURI = baseURL.resolve("/api/doctor/schedule");
+
+    return http.post(
+      createURI,
+      headers: {
+        'Content-Type': 'application/json; charset=UTF-8',
+        'x-auth-token': _token,
+      },
+      body: jsonEncode(schedule),
+    );
   }
 }
