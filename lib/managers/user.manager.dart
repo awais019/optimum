@@ -1,13 +1,24 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:optimum/models/user.model.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class UserManager {
   final User _user = User.init();
+  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+
   String _token = "";
   static final baseURL = Uri.parse('http://127.0.0.1:4000');
+
+  UserManager() {
+    _prefs.then((SharedPreferences prefs) {
+      _token = prefs.getString('token') ?? '';
+      debugPrint('token: $_token');
+    });
+  }
 
   setRole(String role) {
     _user.role = role;
@@ -23,7 +34,14 @@ class UserManager {
 
   setToken(String token) {
     _token = token;
+    _prefs.then((SharedPreferences prefs) {
+      prefs.setString('token', token);
+    });
   }
+
+  String get getToken => _token;
+
+  bool get isLoggedIn => _token.isNotEmpty;
 
   String get getRole => _user.role!;
 

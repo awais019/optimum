@@ -32,7 +32,7 @@ class Optimum extends StatelessWidget {
         fontFamily: 'Plus Jakarta Sans',
         scaffoldBackgroundColor: Colors.white,
       ),
-      initialRoute: "/splash",
+      initialRoute: userManager.isLoggedIn ? "/" : "/splash",
       routes: {
         "/splash": (context) => const SplashScreen(),
         "/": (context) => const Home(),
