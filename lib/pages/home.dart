@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:optimum/app_colors.dart';
+import 'package:optimum/pages/doctor_search.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -97,6 +98,8 @@ class _HomeState extends State<Home> {
                 )),
           ],
         ),
+        backgroundColor: AppColors.light50,
+        body: const DoctorSearch(),
         floatingActionButton: FloatingActionButton(
           onPressed: () {},
           elevation: 3.0,
