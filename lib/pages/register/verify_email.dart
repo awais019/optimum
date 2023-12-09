@@ -79,7 +79,7 @@ class _VerifyEmailState extends State<VerifyEmail> {
       ),
       body: Padding(
         padding: const EdgeInsets.fromLTRB(24.0, 0, 24.0, 0),
-        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        child: ListView(children: [
           const SizedBox(height: 32.0),
           const Text("Check your mail",
               style: TextStyle(
@@ -171,7 +171,6 @@ class _VerifyEmailState extends State<VerifyEmail> {
                   ),
                 ],
               )),
-          const Spacer(),
           SizedBox(
             width: double.infinity,
             child: TextButton(

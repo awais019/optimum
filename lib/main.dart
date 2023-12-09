@@ -12,12 +12,14 @@ import 'package:optimum/pages/profile_completion/clinic_details.dart';
 import 'package:optimum/pages/profile_completion/charges.dart';
 import 'package:optimum/pages/profile_completion/schedule.dart';
 import 'package:optimum/pages/profile_completion/completed.dart';
+import 'package:optimum/pages/auth/signin.dart';
 import 'package:optimum/pages/home.dart';
 
 // data managers
 import 'package:optimum/managers/user.manager.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(Optimum());
 }
 
@@ -60,6 +62,7 @@ class Optimum extends StatelessWidget {
         "/profile_completion/schedule": (context) =>
             Schedule(userManager: userManager),
         "/profile_completion/completed": (context) => const Completed(),
+        "/auth/signin": (context) => SignIn(userManager: userManager),
       },
     );
   }

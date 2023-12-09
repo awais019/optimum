@@ -42,12 +42,15 @@ class _RegisterUserState extends State<RegisterUser> {
           error = data["message"];
         });
       } else {
-        error = "";
+        setState(() {
+          error = "";
+        });
         if (mounted) {
           Navigator.pushNamed(context, "/register/verify_email");
         }
       }
     } catch (e) {
+      debugPrint('$e');
       Fluttertoast.showToast(msg: "Something went wrong!");
     }
     setState(() {

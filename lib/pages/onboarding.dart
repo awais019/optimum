@@ -127,7 +127,9 @@ class _OnBoardingState extends State<OnBoarding> {
             SizedBox(
               width: double.infinity,
               child: TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushNamed(context, "/auth/signin");
+                },
                 child: Container(
                   padding: const EdgeInsets.symmetric(
                       vertical: 16.0, horizontal: 32.0),

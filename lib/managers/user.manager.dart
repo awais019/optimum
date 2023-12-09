@@ -11,7 +11,7 @@ class UserManager {
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
 
   String _token = "";
-  static final baseURL = Uri.parse('http://127.0.0.1:4000');
+  static final baseURL = Uri.parse('http://10.0.2.2:4000');
 
   UserManager() {
     _prefs.then((SharedPreferences prefs) {
@@ -46,6 +46,15 @@ class UserManager {
   String get getRole => _user.role!;
 
   String get getEmail => _user.email!;
+
+  Future<http.Response> signIn(String email, String password) {
+    final signInURI = baseURL.resolve("/api/auth/signin");
+    return http.post(signInURI,
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode({"email": email, "password": password}));
+  }
 
   Future<http.Response> create(
       String name, String email, String password) async {
