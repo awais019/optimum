@@ -11,17 +11,17 @@ class DoctorManager {
   Future<void> fetchDoctors() async {
     final getURI = baseURI.resolve("/api/doctor");
 
+    _doctors = [];
     final response = await http.get(getURI, headers: {
       "x-auth-toke": userManager.getToken,
     });
     if (response.statusCode == 200) {
-      _doctors = [];
       final data = jsonDecode(response.body) as Map<String, dynamic>;
       for (var json in data["data"]) {
         _doctors!.add(Doctor.fromJson(json));
       }
-    } else {
-      throw Exception("Failed to fetch doctors");
+    } else if (response.statusCode == 401) {
+      userManager.signOut();
     }
   }
 

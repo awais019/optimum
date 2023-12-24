@@ -54,6 +54,13 @@ class UserManager {
         body: jsonEncode({"email": email, "password": password}));
   }
 
+  void signOut() {
+    _token = "";
+    _prefs.then((SharedPreferences prefs) {
+      prefs.remove('token');
+    });
+  }
+
   Future<http.Response> create(
       String name, String email, String password) async {
     _user.name = name;
