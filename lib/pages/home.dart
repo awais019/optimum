@@ -66,45 +66,48 @@ class _HomeState extends State<Home> {
       home: Scaffold(
         key: _scaffoldKey,
         appBar: AppBar(
-          backgroundColor: AppColors.light50,
-          elevation: 0,
-          leading: Padding(
-            padding: const EdgeInsets.only(left: 24.0, top: 16.0),
-            child: Container(
-              decoration: const BoxDecoration(
-                shape: BoxShape.circle,
+            backgroundColor: AppColors.light50,
+            elevation: 0,
+            leading: Padding(
+              padding: const EdgeInsets.only(left: 24.0, top: 16.0),
+              child: Container(
+                decoration: const BoxDecoration(
+                  shape: BoxShape.circle,
+                ),
+                child: IconButton(
+                    icon: Image.asset("assets/icons/menu.png"),
+                    onPressed: () {
+                      _scaffoldKey.currentState!.openDrawer();
+                    }),
               ),
-              child: IconButton(
-                  icon: Image.asset("assets/icons/menu.png"),
-                  onPressed: () {
-                    _scaffoldKey.currentState!.openDrawer();
-                  }),
             ),
-          ),
-          actions: [
-            Container(
-                padding: const EdgeInsets.only(right: 24.0, top: 16.0),
-                child: Container(
-                  decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      border: const Border.fromBorderSide(BorderSide(
-                        color: Colors.white,
-                        width: 5.0,
-                      )),
-                      boxShadow: [
-                        BoxShadow(
-                            color: Colors.white.withOpacity(0.05),
-                            blurRadius: 15.0,
-                            offset: const Offset(0, 5.0))
-                      ]),
-                  child: const CircleAvatar(
-                    backgroundImage: NetworkImage(
-                      "https://source.unsplash.com/random/?person",
+            actions: [
+              Container(
+                padding: const EdgeInsets.only(top: 16.0),
+                child: Image.asset("assets/icons/notifications.png"),
+              ),
+              Container(
+                  padding: const EdgeInsets.only(right: 16.0, top: 16.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        border: const Border.fromBorderSide(BorderSide(
+                          color: Colors.white,
+                          width: 5.0,
+                        )),
+                        boxShadow: [
+                          BoxShadow(
+                              color: Colors.white.withOpacity(0.05),
+                              blurRadius: 15.0,
+                              offset: const Offset(0, 5.0))
+                        ]),
+                    child: const CircleAvatar(
+                      backgroundImage: NetworkImage(
+                        "https://source.unsplash.com/random/?person",
+                      ),
                     ),
-                  ),
-                )),
-          ],
-        ),
+                  )),
+            ]),
         backgroundColor: AppColors.light50,
         drawer: const SideDrawer(),
         body: const Text("Home"),
