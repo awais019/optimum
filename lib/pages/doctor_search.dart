@@ -77,7 +77,9 @@ class _DoctorSearchState extends State<DoctorSearch> {
                         ),
                         const SizedBox(width: 16.0),
                         IconButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.pushNamed(context, "/doctor/filters");
+                            },
                             icon: Container(
                                 decoration: BoxDecoration(
                                     color: AppColors.primaryColor,

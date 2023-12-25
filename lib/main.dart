@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:optimum/app_colors.dart';
 import 'package:optimum/pages/doctor_search.dart';
+import 'package:optimum/pages/filters.dart';
 
 // pages
 import 'package:optimum/pages/splash_screen.dart';
@@ -73,6 +74,7 @@ class Optimum extends StatelessWidget {
         "/profile_completion/completed": (context) => const Completed(),
         "/auth/signin": (context) => const SignIn(),
         "/doctor/search": (context) => const DoctorSearch(),
+        "/doctor/filters": (context) => const Filters(),
       },
     );
   }
