@@ -12,8 +12,8 @@ class DoctorManager {
     final getURI = baseURI.resolve("/api/doctor");
 
     _doctors = [];
-    final response = await http.get(getURI, headers: {
-      "x-auth-toke": userManager.getToken,
+    http.Response response = await http.get(getURI, headers: {
+      "x-auth-token": userManager.getToken,
     });
     if (response.statusCode == 200) {
       final data = jsonDecode(response.body) as Map<String, dynamic>;

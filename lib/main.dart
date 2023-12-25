@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:optimum/app_colors.dart';
+import 'package:optimum/pages/doctor_search.dart';
 
 // pages
 import 'package:optimum/pages/splash_screen.dart';
@@ -42,6 +43,11 @@ class Optimum extends StatelessWidget {
       theme: ThemeData(
           fontFamily: 'Plus Jakarta Sans',
           scaffoldBackgroundColor: AppColors.light50,
+          appBarTheme: const AppBarTheme(
+            backgroundColor: AppColors.light50,
+            elevation: 0,
+            centerTitle: true,
+          ),
           floatingActionButtonTheme: FloatingActionButtonThemeData(
             sizeConstraints: BoxConstraints.tight(const Size(76, 76)),
           )),
@@ -65,7 +71,8 @@ class Optimum extends StatelessWidget {
         "/profile_completion/schedule": (context) =>
             Schedule(userManager: userManager),
         "/profile_completion/completed": (context) => const Completed(),
-        "/auth/signin": (context) => SignIn(userManager: userManager),
+        "/auth/signin": (context) => const SignIn(),
+        "/doctor/search": (context) => const DoctorSearch(),
       },
     );
   }

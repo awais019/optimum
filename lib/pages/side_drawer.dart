@@ -12,7 +12,10 @@ class SideDrawer extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 48.0),
         children: [
           TextButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pop(context);
+              Navigator.pushNamed(context, "/doctor/search");
+            },
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [

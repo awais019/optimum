@@ -7,8 +7,7 @@ import 'package:optimum/app_colors.dart';
 import 'package:optimum/managers/user.manager.dart';
 
 class SignIn extends StatefulWidget {
-  final UserManager userManager;
-  const SignIn({super.key, required this.userManager});
+  const SignIn({super.key});
 
   @override
   State<SignIn> createState() => _SignInState();
@@ -28,7 +27,7 @@ class _SignInState extends State<SignIn> {
       isLoading = true;
     });
     try {
-      Response res = await widget.userManager.signIn(
+      Response res = await userManager.signIn(
         emailController.text,
         passwordController.text,
       );
@@ -44,6 +43,7 @@ class _SignInState extends State<SignIn> {
           error = "";
         });
         if (mounted) {
+          userManager.setToken(data["data"]["token"]);
           if (data["data"]["role"] == "PATIENT") {
             Navigator.pushNamed(context, "/");
           }
