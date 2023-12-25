@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:optimum/app_colors.dart';
-import 'package:optimum/pages/doctor_search.dart';
+import 'package:optimum/pages/side_drawer.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -11,6 +11,8 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   int currentIndex = 0;
+
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   Widget _buildTabItem({
     required String asset,
@@ -62,6 +64,7 @@ class _HomeState extends State<Home> {
             sizeConstraints: BoxConstraints.tight(const Size(76, 76)),
           )),
       home: Scaffold(
+        key: _scaffoldKey,
         appBar: AppBar(
           backgroundColor: AppColors.light50,
           elevation: 0,
@@ -71,7 +74,11 @@ class _HomeState extends State<Home> {
               decoration: const BoxDecoration(
                 shape: BoxShape.circle,
               ),
-              child: Image.asset("assets/icons/menu.png"),
+              child: IconButton(
+                  icon: Image.asset("assets/icons/menu.png"),
+                  onPressed: () {
+                    _scaffoldKey.currentState!.openDrawer();
+                  }),
             ),
           ),
           actions: [
@@ -99,7 +106,8 @@ class _HomeState extends State<Home> {
           ],
         ),
         backgroundColor: AppColors.light50,
-        body: const DoctorSearch(),
+        drawer: const SideDrawer(),
+        body: const Text("Home"),
         floatingActionButton: FloatingActionButton(
           onPressed: () {},
           elevation: 3.0,
