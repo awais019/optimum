@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:optimum/app_colors.dart';
 
 // pages
 import 'package:optimum/pages/splash_screen.dart';
@@ -39,9 +40,11 @@ class Optimum extends StatelessWidget {
     return MaterialApp(
       title: 'Optimum',
       theme: ThemeData(
-        fontFamily: 'Plus Jakarta Sans',
-        scaffoldBackgroundColor: Colors.white,
-      ),
+          fontFamily: 'Plus Jakarta Sans',
+          scaffoldBackgroundColor: AppColors.light50,
+          floatingActionButtonTheme: FloatingActionButtonThemeData(
+            sizeConstraints: BoxConstraints.tight(const Size(76, 76)),
+          )),
       initialRoute: getInitialRoute(),
       routes: {
         "/splash": (context) => const SplashScreen(),
